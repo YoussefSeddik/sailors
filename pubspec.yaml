@@ -38,6 +38,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/dummy.png
+    - images/ic_logo.png
     - i18n/en.json
     - i18n/ar.json
   fonts:

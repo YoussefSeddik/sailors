@@ -4,8 +4,8 @@ import 'package:sailors/src/core/extensions/extensions.dart';
 import '../../core/utils/colors_constants.dart';
 import '../../core/utils/dimens_constants.dart';
 
-class ScreenChooseLoginRegister extends StatelessWidget {
-  const ScreenChooseLoginRegister({Key? key}) : super(key: key);
+class ChooseLoginRegisterScreen extends StatelessWidget {
+  const ChooseLoginRegisterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

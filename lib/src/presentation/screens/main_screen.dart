@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
-import 'package:sailors/src/presentation/views/screen_add_ad.dart';
-import 'package:sailors/src/presentation/views/screen_ads.dart';
-import 'package:sailors/src/presentation/views/screen_home.dart';
-import 'package:sailors/src/presentation/views/screen_notifications.dart';
-import 'package:sailors/src/presentation/views/screen_profile.dart';
+import 'package:sailors/src/presentation/screens/profile_screen.dart';
+import 'add_ad_screen.dart';
+import 'ads_screen.dart';
+import 'home_screen.dart';
+import 'notifications_screen.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.light;
@@ -19,22 +19,22 @@ class ThemeProvider extends ChangeNotifier {
   }
 }
 
-class ScreenMain extends StatefulWidget {
-  const ScreenMain({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
-  State<ScreenMain> createState() => _ScreenMainState();
+  State<MainScreen> createState() => _MainScreenState();
 }
 
-class _ScreenMainState extends State<ScreenMain> {
+class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = const [
-    ScreenHome(),
-    ScreenAds(),
-    ScreenAddAd(),
-    ScreenNotification(),
-    ScreenProfile(),
+    HomeScreen(),
+    AdsScreen(),
+    AddAdScreen(),
+    NotificationScreen(),
+    ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {

@@ -1,11 +1,17 @@
 {
   "title": "Hello!",
-  "Message": "This is English",
-  "login": "Log In",
+  "Message": "This is english",
+  "login": "Log in",
   "register": "Register",
   "nav_home": "Home",
-  "nav_ads": "My Ads",
-  "nav_add_ad": "Add Ad",
+  "nav_ads": "My ads",
+  "nav_add_ad": "Add ad",
   "nav_notifications": "Notifications",
-  "nav_profile": "Profile"
+  "nav_profile": "Profile",
+  "phone_number": "Phone number",
+  "password": "Password",
+  "forgot_password": "Forgot password!",
+  "no_account": "Don't have an account? ",
+  "guest_login": "As a guest",
+  "have_account": "Already have an account? "
 }

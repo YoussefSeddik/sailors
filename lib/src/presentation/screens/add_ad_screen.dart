@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 
-class ScreenAddAd extends StatelessWidget {
-  const ScreenAddAd({Key? key}) : super(key: key);
+class AddAdScreen extends StatelessWidget {
+  const AddAdScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

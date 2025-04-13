@@ -1,12 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-enum BlocProcessState {
-  busy,
-  idle,
-}
+enum BlocProcessState { busy, idle }
 
-abstract class BlocWithState<E, S> extends Bloc<E, S> {
-  BlocWithState(S initialState) : super(initialState);
+abstract class BlocWithState<E, S> extends Bloc<E, S>
+    implements StateStreamable<S> {
+  BlocWithState(super.initialState);
 
   BlocProcessState _state = BlocProcessState.idle;
 

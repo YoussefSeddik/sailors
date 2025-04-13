@@ -1,28 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:sailors/src/core/utils/dimens_constants.dart';
 
-import '../../core/utils/colors_constants.dart';
+class AppTheme {
+  static final lightTheme = ThemeData(
+    useMaterial3: true,
+    colorScheme: const ColorScheme.light(
+      primary: Color(0xFF00A9C8),
+      onPrimary: Colors.white,
+      secondary: Color(0xFF006D77),
+      background: Colors.white,
+      onBackground: Color(0xFFCCCCCC),
+      surface: Colors.white,
+      onSurface: Color(0xFFCCCCCC),
+    ),
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(color: Color(0xFF000000)),
+      bodyMedium: TextStyle(color: Color(0xFF000000)),
+      titleLarge: TextStyle(color: Color(0xFF000000)),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(foregroundColor: Color(0xFF51AACC)),
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: const Color(0xFF51AACC),
+        foregroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: const Color(0xFF51AACC),
+        side: const BorderSide(color: Color(0xFF51AACC)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
+      ),
+    ),
+    scaffoldBackgroundColor: Colors.white,
+  );
 
-mixin AppTheme {
-  static ThemeData get light {
-    final ThemeData base = ThemeData.light();
-    return base.copyWith(
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-          color: Colors.white,
-        ),
-        scaffoldBackgroundColor: Colors.white,
-        primaryColor: Colors.white,
-        hintColor: ColorsConstant.kAccentColor,
-        splashColor: Colors.transparent,
-        textTheme: _buildTextTheme(base.textTheme));
-  }
-
-  static _buildTextTheme(TextTheme textTheme) =>
-      textTheme.copyWith(
-        bodySmall: const TextStyle(fontSize: DimensConstants.kDimens_12,fontWeight: FontWeight.w400),
-
-      ).apply(
-        fontFamily: 'Tajawal',
-      );
+  static final darkTheme = ThemeData(
+    useMaterial3: true,
+    colorScheme: const ColorScheme.dark(
+      primary: Color(0xFF183D3D),
+      onPrimary: Colors.white,
+      secondary: Color(0xFF5C8374),
+      background: Color(0xFF121212),
+      onBackground: Colors.white,
+      surface: Color(0xFF1E1E1E),
+      onSurface: Colors.white,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+    ),
+    scaffoldBackgroundColor: const Color(0xFF121212),
+  );
 }
