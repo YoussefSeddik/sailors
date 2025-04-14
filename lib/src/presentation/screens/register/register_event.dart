@@ -1,6 +1,6 @@
-abstract class LoginEvent {}
+abstract class RegisterEvent {}
 
-class RegisterSubmitted extends LoginEvent {
+class RegisterSubmitted extends RegisterEvent {
   final String name;
   final String phone;
   final String password;

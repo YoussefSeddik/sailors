@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sailors/src/domain/usecaes/register_usecase.dart';
 import 'package:sailors/src/presentation/screens/login/login_bloc.dart';
+import 'package:sailors/src/presentation/screens/otp/otp_bloc.dart';
 import 'package:sailors/src/presentation/screens/register/register_bloc.dart';
 import 'data/datasources/remote/auth_api_service.dart';
 import 'data/repositories/auth_repository_impl.dart';
@@ -25,4 +26,5 @@ Future<void> initializeDependencies() async {
   // Blocs
   injector.registerFactory<LoginBloc>(() => LoginBloc(injector()));
   injector.registerFactory<RegisterBloc>(() => RegisterBloc(injector()));
+  injector.registerFactory<OtpBloc>(() => OtpBloc());
 }

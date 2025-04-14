@@ -6,24 +6,23 @@ import '../../../config/routes/app_routes.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../injector.dart';
 import '../../../widgets/loading_overlay.dart';
-import 'login_bloc.dart';
-import 'login_event.dart';
+import 'register_bloc.dart';
+import 'register_event.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final nameController = TextEditingController();
     final phoneController = TextEditingController();
     final passwordController = TextEditingController();
-    final primaryColor = Theme.of(context).colorScheme.primary;
-    final textColor = Theme.of(context).colorScheme.onBackground;
 
     return BlocProvider(
-      create: (_) => injector<LoginBloc>(),
+      create: (_) => injector<RegisterBloc>(),
       child: Scaffold(
         body: SafeArea(
-          child: BlocBuilder<LoginBloc, BaseState<void>>(
+          child: BlocBuilder<RegisterBloc, BaseState<void>>(
             builder: (context, state) {
               final isLoading = state is LoadingState;
 
@@ -44,17 +43,21 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(height: 200),
                           Center(
                             child: Text(
-                              'login'.tr(),
+                              'register'.tr(),
                               style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(height: 40),
                           TextField(
+                            controller: nameController,
+                            decoration: InputDecoration(hintText: 'name'.tr()),
+                          ),
+                          const SizedBox(height: 12),
+                          TextField(
                             controller: phoneController,
                             decoration: InputDecoration(
                               hintText: 'phone_number'.tr(),
-                              prefixIcon: const Icon(Icons.person_outline),
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -63,50 +66,34 @@ class LoginScreen extends StatelessWidget {
                             obscureText: true,
                             decoration: InputDecoration(
                               hintText: 'password'.tr(),
-                              prefixIcon: const Icon(Icons.visibility_outlined),
-                            ),
-                          ),
-                          const SizedBox(height: 12),
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: GestureDetector(
-                              onTap: () {},
-                              child: Text(
-                                'forgot_password'.tr(),
-                                style: TextStyle(
-                                  color: primaryColor,
-                                  decoration: TextDecoration.none,
-                                ),
-                              ),
                             ),
                           ),
                           const SizedBox(height: 10),
-                          BlocConsumer<LoginBloc, BaseState<void>>(
+                          BlocConsumer<RegisterBloc, BaseState<void>>(
                             listener: (context, state) {
                               if (state is SuccessState) {
                                 Navigator.pushReplacementNamed(
                                   context,
-                                  RoutesConstants.mainScreen,
+                                  RoutesConstants.otpScreen,
                                 );
-                              } else if (state case FailureState(
-                                :final message,
-                              )) {
+                              } else if (state is FailureState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(message)),
+                                  SnackBar(content: Text(state.message)),
                                 );
                               }
                             },
                             builder: (context, state) {
                               return ElevatedButton(
                                 onPressed: () {
-                                  context.read<LoginBloc>().add(
-                                    LoginSubmitted(
+                                  context.read<RegisterBloc>().add(
+                                    RegisterSubmitted(
+                                      nameController.text,
                                       phoneController.text,
                                       passwordController.text,
                                     ),
                                   );
                                 },
-                                child: Text('login'.tr()),
+                                child: Text('register'.tr()),
                               );
                             },
                           ),
@@ -114,34 +101,29 @@ class LoginScreen extends StatelessWidget {
                           Center(
                             child: Text.rich(
                               TextSpan(
-                                text: 'no_account'.tr(),
-                                style: TextStyle(color: textColor),
+                                text: 'have_account'.tr(),
+                                style: TextStyle(
+                                  color:
+                                      Theme.of(
+                                        context,
+                                      ).colorScheme.onBackground,
+                                ),
                                 children: [
                                   TextSpan(
-                                    text: 'register'.tr(),
-                                    style: TextStyle(color: primaryColor),
+                                    text: 'login'.tr(),
+                                    style: TextStyle(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
                                     recognizer:
                                         TapGestureRecognizer()
-                                          ..onTap = () {
-                                            Navigator.pushNamed(
-                                              context,
-                                              RoutesConstants.registerScreen,
-                                            );
-                                          },
+                                          ..onTap =
+                                              () => Navigator.pop(context),
                                   ),
                                 ],
                               ),
                             ),
                           ),
-                          const Spacer(),
-                          OutlinedButton(
-                            onPressed: () {},
-                            child: Text(
-                              'guest_login'.tr(),
-                              style: TextStyle(color: primaryColor),
-                            ),
-                          ),
-                          const SizedBox(height: 40),
                         ],
                       ),
                     ),

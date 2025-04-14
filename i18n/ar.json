@@ -7,5 +7,15 @@
   "nav_ads": "إعلاناتي",
   "nav_add_ad": "أضف إعلان",
   "nav_notifications": "الإشعارات",
-  "nav_profile": "حسابي"
+  "nav_profile": "حسابي",
+  "password": "Password",
+  "forgot_password": "Forgot password!",
+  "no_account": "Don't have an account? ",
+  "guest_login": "As a guest",
+  "have_account": "Already have an account? ",
+  "otp_title": "Confirm phone number",
+  "otp_verified_success": "Verified successfully",
+  "otp_confirm": "Confirm",
+  "otp_resend": "Send again",
+  "otp_resend_wait": "Send again in {} seconds"
 }

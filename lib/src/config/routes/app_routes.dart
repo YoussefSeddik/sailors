@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sailors/src/presentation/screens/otp/otp_screen.dart';
 
 import '../../presentation/screens/add_ad_screen.dart';
 import '../../presentation/screens/ads_screen.dart';
@@ -8,7 +9,7 @@ import '../../presentation/screens/login/login_screen.dart';
 import '../../presentation/screens/main_screen.dart';
 import '../../presentation/screens/notifications_screen.dart';
 import '../../presentation/screens/profile_screen.dart';
-import '../../presentation/screens/register/RegisterScreen.dart';
+import '../../presentation/screens/register/register_screen.dart';
 import '../../presentation/screens/welcome_screen.dart';
 
 mixin AppRoutes {
@@ -44,6 +45,9 @@ mixin AppRoutes {
       case RoutesConstants.registerScreen:
         return _materialRoute(const RegisterScreen());
 
+      case RoutesConstants.otpScreen:
+        return _materialRoute(const OtpScreen());
+
       default:
         return _materialRoute(
           const Scaffold(body: Center(child: Text("Route not found"))),
@@ -68,4 +72,5 @@ class RoutesConstants {
   static const profileScreen = "/ProfileScreen";
   static const loginScreen = "/LoginScreen";
   static const registerScreen = "/RegisterScreen";
+  static const otpScreen = "/OtpScreen";
 }

@@ -34,6 +34,8 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<DataState<UserModel>> register(RegisterParams params) async {
+    await Future.delayed(const Duration(seconds: 2));
+    return DataSuccess(UserModel(name: "", phone: "", token: ""));
     try {
       final response = await _api.register(
         params.name,
