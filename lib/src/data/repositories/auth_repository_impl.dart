@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:sailors/src/data/models/params/register_params.dart';
 import '../../core/resources/data_state.dart';
+import '../../core/utils/constants.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../datasources/remote/auth_api_service.dart';
 import '../models/params/login_params.dart';
@@ -34,7 +35,9 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<DataState<UserModel>> register(RegisterParams params) async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(
+      const Duration(milliseconds: requestMockDelayInMillis),
+    );
     return DataSuccess(UserModel(name: "", phone: "", token: ""));
     try {
       final response = await _api.register(

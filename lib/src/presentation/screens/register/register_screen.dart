@@ -101,7 +101,7 @@ class RegisterScreen extends StatelessWidget {
                           Center(
                             child: Text.rich(
                               TextSpan(
-                                text: 'have_account'.tr(),
+                                text: 'already_have_an_account'.tr(),
                                 style: TextStyle(
                                   color:
                                       Theme.of(
@@ -110,7 +110,7 @@ class RegisterScreen extends StatelessWidget {
                                 ),
                                 children: [
                                   TextSpan(
-                                    text: 'login'.tr(),
+                                    text: 'log_in'.tr(),
                                     style: TextStyle(
                                       color:
                                           Theme.of(context).colorScheme.primary,

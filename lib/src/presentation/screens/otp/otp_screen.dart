@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:sailors/src/widgets/loading_overlay.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../injector.dart';
 import 'otp_bloc.dart';
@@ -30,11 +31,15 @@ class _OtpViewState extends State<_OtpView> {
     4,
     (_) => TextEditingController(),
   );
+  final List<FocusNode> _focusNodes = List.generate(4, (_) => FocusNode());
 
   @override
   void dispose() {
     for (var c in _controllers) {
       c.dispose();
+    }
+    for (var f in _focusNodes) {
+      f.dispose();
     }
     super.dispose();
   }
@@ -46,97 +51,123 @@ class _OtpViewState extends State<_OtpView> {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 100),
-              Text(
-                'otp_title'.tr(),
-                style: theme.textTheme.titleLarge?.copyWith(
-                  color: colorScheme.onBackground,
+    return BlocProvider(
+      create: (_) => injector<OtpBloc>(),
+      child: Scaffold(
+        body: SafeArea(
+          child: BlocBuilder<OtpBloc, BaseState<void>>(
+            builder: (BuildContext context, BaseState<void> state) {
+              final isLoading = state is LoadingState;
+              return LoadingOverlay(
+                isLoading: isLoading,
+                child: Padding(
+                  padding: const EdgeInsets.all(24.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const SizedBox(height: 200),
+                      Center(
+                        child: Text(
+                          'confirm_phone_number'.tr(),
+                          style: Theme.of(context).textTheme.titleLarge
+                              ?.copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      const SizedBox(height: 40),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: List.generate(4, (index) {
+                          return SizedBox(
+                            width: 65,
+                            child: TextField(
+                              controller: _controllers[index],
+                              focusNode: _focusNodes[index],
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              maxLength: 1,
+                              decoration: const InputDecoration(
+                                counterText: '',
+                              ),
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  if (index < 3) {
+                                    FocusScope.of(
+                                      context,
+                                    ).requestFocus(_focusNodes[index + 1]);
+                                  } else {
+                                    FocusScope.of(context).unfocus();
+                                  }
+                                } else if (index > 0) {
+                                  FocusScope.of(
+                                    context,
+                                  ).requestFocus(_focusNodes[index - 1]);
+                                }
+                              },
+                            ),
+                          );
+                        }),
+                      ),
+                      const SizedBox(height: 30),
+                      BlocConsumer<OtpBloc, BaseState<void>>(
+                        listener: (context, state) {
+                          if (state is SuccessState) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('verified_successfully'.tr()),
+                              ),
+                            );
+                          } else if (state case FailureState(:final message)) {
+                            ScaffoldMessenger.of(
+                              context,
+                            ).showSnackBar(SnackBar(content: Text(message)));
+                          }
+                        },
+                        builder: (context, state) {
+                          return ElevatedButton(
+                            onPressed: () {
+                              context.read<OtpBloc>().add(OtpSubmitted(_otp));
+                            },
+                            child: Text('confirm'.tr()),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      BlocBuilder<OtpBloc, BaseState<void>>(
+                        builder: (context, state) {
+                          final bloc = context.read<OtpBloc>();
+                          final enabled = bloc.secondsRemaining == 0;
+                          final secondsRemaining =
+                              state is TickState
+                                  ? state.secondsRemaining
+                                  : bloc.secondsRemaining;
+                          return TextButton(
+                            onPressed:
+                                enabled
+                                    ? () => bloc.add(OtpResendRequested())
+                                    : null,
+                            child: Text(
+                              enabled
+                                  ? 'send_again'.tr()
+                                  : 'send_again_in_seconds'.tr(
+                                    args: ['$secondsRemaining'],
+                                  ),
+                              style: TextStyle(
+                                color:
+                                    enabled
+                                        ? colorScheme.primary
+                                        : colorScheme.onSurface.withOpacity(
+                                          0.5,
+                                        ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 40),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: List.generate(4, (index) {
-                  return SizedBox(
-                    width: 50,
-                    child: TextField(
-                      controller: _controllers[index],
-                      keyboardType: TextInputType.number,
-                      textAlign: TextAlign.center,
-                      maxLength: 1,
-                      style: TextStyle(color: colorScheme.onBackground),
-                      decoration: InputDecoration(
-                        counterText: '',
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: colorScheme.primary),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: colorScheme.primary),
-                        ),
-                      ),
-                    ),
-                  );
-                }),
-              ),
-              const SizedBox(height: 30),
-              BlocConsumer<OtpBloc, BaseState<void>>(
-                listener: (context, state) {
-                  if (state is SuccessState) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('otp_verified_success'.tr())),
-                    );
-                  } else if (state case FailureState(:final message)) {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(message)));
-                  }
-                },
-                builder: (context, state) {
-                  return ElevatedButton(
-                    onPressed: () {
-                      context.read<OtpBloc>().add(OtpSubmitted(_otp));
-                    },
-                    child:
-                        state is LoadingState
-                            ? const CircularProgressIndicator(
-                              color: Colors.white,
-                            )
-                            : Text('otp_confirm'.tr()),
-                  );
-                },
-              ),
-              const SizedBox(height: 20),
-              BlocBuilder<OtpBloc, BaseState<void>>(
-                builder: (context, state) {
-                  final bloc = context.read<OtpBloc>();
-                  final enabled = bloc.secondsRemaining == 0;
-                  return TextButton(
-                    onPressed:
-                        enabled ? () => bloc.add(OtpResendRequested()) : null,
-                    child: Text(
-                      enabled
-                          ? 'otp_resend'.tr()
-                          : 'otp_resend_wait'.tr(
-                            args: ['${bloc.secondsRemaining}'],
-                          ),
-                      style: TextStyle(
-                        color:
-                            enabled
-                                ? colorScheme.primary
-                                : colorScheme.onSurface.withOpacity(0.5),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
+              );
+            },
           ),
         ),
       ),

@@ -68,23 +68,23 @@ class _MainScreenState extends State<MainScreen> {
                 items: [
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.home),
-                    label: 'nav_home'.tr(),
+                    label: 'home'.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.store),
-                    label: 'nav_ads'.tr(),
+                    label: 'my_ads'.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.add_a_photo),
-                    label: 'nav_add_ad'.tr(),
+                    label: 'add_ad'.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.notifications),
-                    label: 'nav_notifications'.tr(),
+                    label: 'notifications'.tr(),
                   ),
                   BottomNavigationBarItem(
                     icon: const Icon(Icons.person),
-                    label: 'nav_profile'.tr(),
+                    label: 'profile'.tr(),
                   ),
                 ],
               ),

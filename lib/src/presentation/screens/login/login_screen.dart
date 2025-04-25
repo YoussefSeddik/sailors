@@ -44,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(height: 200),
                           Center(
                             child: Text(
-                              'login'.tr(),
+                              'log_in'.tr(),
                               style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
@@ -106,7 +106,7 @@ class LoginScreen extends StatelessWidget {
                                     ),
                                   );
                                 },
-                                child: Text('login'.tr()),
+                                child: Text('log_in'.tr()),
                               );
                             },
                           ),
@@ -114,7 +114,7 @@ class LoginScreen extends StatelessWidget {
                           Center(
                             child: Text.rich(
                               TextSpan(
-                                text: 'no_account'.tr(),
+                                text: 'dont_have_an_account'.tr(),
                                 style: TextStyle(color: textColor),
                                 children: [
                                   TextSpan(
@@ -135,9 +135,14 @@ class LoginScreen extends StatelessWidget {
                           ),
                           const Spacer(),
                           OutlinedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(
+                                context,
+                                RoutesConstants.mainScreen,
+                              );
+                            },
                             child: Text(
-                              'guest_login'.tr(),
+                              'as_a_guest'.tr(),
                               style: TextStyle(color: primaryColor),
                             ),
                           ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sailors/src/config/routes/app_routes.dart';
 
+import '../../core/utils/constants.dart';
+
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 
@@ -20,7 +22,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: welcomeDurationInMillis),
     );
 
     _fadeAnimation = Tween<double>(
@@ -35,7 +37,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
 
     _controller.forward();
 
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(milliseconds: welcomeDurationInMillis), () {
       Navigator.pushReplacementNamed(context, RoutesConstants.loginScreen);
     });
   }

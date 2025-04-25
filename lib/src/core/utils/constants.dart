@@ -5,4 +5,6 @@ const String kBaseUrl = 'https://newsapi.org/v2';
 
 const String kApiKey = '2656baeeb9da4ba8a32ad86c54975c3a';
 
+const int welcomeDurationInMillis = 500;
 
+const int requestMockDelayInMillis = 500;
