@@ -70,7 +70,12 @@ class LoginScreen extends StatelessWidget {
                           Align(
                             alignment: Alignment.centerLeft,
                             child: GestureDetector(
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  RoutesConstants.forgetPasswordScreen,
+                                );
+                              },
                               child: Text(
                                 'forgot_password'.tr(),
                                 style: TextStyle(
@@ -84,9 +89,10 @@ class LoginScreen extends StatelessWidget {
                           BlocConsumer<LoginBloc, BaseState<void>>(
                             listener: (context, state) {
                               if (state is SuccessState) {
-                                Navigator.pushReplacementNamed(
+                                Navigator.pushNamedAndRemoveUntil(
                                   context,
                                   RoutesConstants.mainScreen,
+                                  (route) => false,
                                 );
                               } else if (state case FailureState(
                                 :final message,
@@ -136,9 +142,10 @@ class LoginScreen extends StatelessWidget {
                           const Spacer(),
                           OutlinedButton(
                             onPressed: () {
-                              Navigator.pushNamed(
+                              Navigator.pushNamedAndRemoveUntil(
                                 context,
                                 RoutesConstants.mainScreen,
+                                (route) => false,
                               );
                             },
                             child: Text(

@@ -2,9 +2,15 @@ abstract class OtpEvent {}
 
 class OtpSubmitted extends OtpEvent {
   final String otp;
-  OtpSubmitted(this.otp);
+  final String phone;
+
+  OtpSubmitted(this.otp, this.phone);
 }
 
-class OtpResendRequested extends OtpEvent {}
+class OtpResendRequested extends OtpEvent {
+  final String phone;
+
+  OtpResendRequested(this.phone);
+}
 
 class OtpTick extends OtpEvent {}

@@ -1,13 +1,22 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:sailors/src/domain/usecaes/cofirm_phone_usecase.dart';
 import '../../../core/bloc/base_state.dart';
+import '../../../core/resources/data_state.dart';
+import '../../../data/models/params/confirm_phone_params.dart';
+import '../../../domain/usecaes/send_otp_usecase.dart';
 import 'otp_event.dart';
 
 class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
   int secondsRemaining = 0;
   Timer? _timer;
 
-  OtpBloc() : super(InitialState()) {
+  final SendOtpUseCase _sendOtpUseCase;
+
+  final ConfirmPhoneUseCase _confirmPhoneUseCase;
+
+  OtpBloc(this._sendOtpUseCase, this._confirmPhoneUseCase)
+    : super(InitialState()) {
     on<OtpSubmitted>(_onSubmit);
     on<OtpResendRequested>(_onResend);
     on<OtpTick>(_onTick);
@@ -18,14 +27,15 @@ class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
     Emitter<BaseState<void>> emit,
   ) async {
     emit(LoadingState());
-    await Future.delayed(const Duration(seconds: 1)); // Simulate API call
 
-    if (event.otp == "1234") {
+    final result = await _confirmPhoneUseCase(
+      params: ConfirmPhoneParams(phone: event.phone, otp: event.otp),
+    );
+
+    if (result is DataSuccess) {
       emit(SuccessState(null));
-      secondsRemaining = 30;
-      _startTimer();
     } else {
-      emit(FailureState("Incorrect OTP"));
+      emit(FailureState(result.error?.message ?? "OTP verification failed"));
     }
   }
 
@@ -33,12 +43,19 @@ class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
     OtpResendRequested event,
     Emitter<BaseState<void>> emit,
   ) async {
-    secondsRemaining = 30;
-    emit(InitialState());
+    emit(LoadingState());
+    final result = await _sendOtpUseCase(params: event.phone);
+    if (result is DataSuccess) {
+      secondsRemaining = 30;
+      emit(InitialState());
+      _startTimer();
+    } else {
+      emit(FailureState(result.error?.message ?? "Failed to resend OTP"));
+    }
   }
 
   void _onTick(OtpTick event, Emitter<BaseState<void>> emit) {
-    emit(TickState(secondsRemaining)); // Rebuild UI
+    emit(TickState(secondsRemaining));
   }
 
   void _startTimer() {
@@ -64,6 +81,4 @@ class TickState<T> extends BaseState<T> {
   int secondsRemaining = 0;
 
   TickState(this.secondsRemaining);
-
 }
-

@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:sailors/src/widgets/loading_overlay.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../injector.dart';
+import '../../models/otp_result_model.dart';
 import 'otp_bloc.dart';
 import 'otp_event.dart';
 
@@ -116,6 +117,11 @@ class _OtpViewState extends State<_OtpView> {
                                 content: Text('verified_successfully'.tr()),
                               ),
                             );
+                            Navigator.pop(context, OtpResult(
+                              phoneNumber: "+201234567890",
+                              // or any dynamic value
+                              verified: true,
+                            ));
                           } else if (state case FailureState(:final message)) {
                             ScaffoldMessenger.of(
                               context,
@@ -125,7 +131,7 @@ class _OtpViewState extends State<_OtpView> {
                         builder: (context, state) {
                           return ElevatedButton(
                             onPressed: () {
-                              context.read<OtpBloc>().add(OtpSubmitted(_otp));
+                              context.read<OtpBloc>().add(OtpSubmitted(_otp,"01003760243"));
                             },
                             child: Text('confirm'.tr()),
                           );
@@ -143,7 +149,7 @@ class _OtpViewState extends State<_OtpView> {
                           return TextButton(
                             onPressed:
                                 enabled
-                                    ? () => bloc.add(OtpResendRequested())
+                                    ? () => bloc.add(OtpResendRequested("01003760243"))
                                     : null,
                             child: Text(
                               enabled

@@ -8,6 +8,7 @@
   "add_ad": "Add ad",
   "notifications": "Notifications",
   "profile": "Profile",
+  "name": "Name",
   "phone_number": "Phone number",
   "password": "Password",
   "forgot_password": "Forgot password!",
@@ -18,5 +19,10 @@
   "verified_successfully": "Verified successfully",
   "confirm": "Confirm",
   "send_again": "Send again",
-  "send_again_in_seconds": "Send again in {} seconds"
+  "send_again_in_seconds": "Send again in {} seconds",
+  "account_created_successfully": "Account created\nsuccessfully",
+  "browse_now": "Browse now",
+  "forgot_password_without?": "Forgot password",
+  "enter_phone_number": "Enter phone number",
+  "send_code": "Send code"
 }

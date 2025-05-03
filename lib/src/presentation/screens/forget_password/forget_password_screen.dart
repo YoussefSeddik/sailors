@@ -1,29 +1,28 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:sailors/src/presentation/screens/forget_password/forget_password_event.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../injector.dart';
 import '../../../widgets/loading_overlay.dart';
 import '../../models/otp_result_model.dart';
-import 'register_bloc.dart';
-import 'register_event.dart';
+import 'forget_password_bloc.dart';
 
-class RegisterScreen extends StatelessWidget {
-  const RegisterScreen({super.key});
+class ForgetPasswordScreen extends StatelessWidget {
+  const ForgetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final nameController = TextEditingController();
     final phoneController = TextEditingController();
-    final passwordController = TextEditingController();
+    final primaryColor = Theme.of(context).colorScheme.primary;
+    final textColor = Theme.of(context).colorScheme.onBackground;
 
     return BlocProvider(
-      create: (_) => injector<RegisterBloc>(),
+      create: (_) => injector<ForgetPasswordBloc>(),
       child: Scaffold(
         body: SafeArea(
-          child: BlocBuilder<RegisterBloc, BaseState<void>>(
+          child: BlocBuilder<ForgetPasswordBloc, BaseState<void>>(
             builder: (context, state) {
               final isLoading = state is LoadingState;
 
@@ -44,93 +43,67 @@ class RegisterScreen extends StatelessWidget {
                           const SizedBox(height: 200),
                           Center(
                             child: Text(
-                              'register'.tr(),
+                              'forgot_password_without?'.tr(),
                               style: Theme.of(context).textTheme.titleLarge
                                   ?.copyWith(fontWeight: FontWeight.bold),
                             ),
                           ),
                           const SizedBox(height: 40),
                           TextField(
-                            controller: nameController,
-                            decoration: InputDecoration(hintText: 'name'.tr()),
-                          ),
-                          const SizedBox(height: 12),
-                          TextField(
                             controller: phoneController,
                             decoration: InputDecoration(
                               hintText: 'phone_number'.tr(),
+                              prefixIcon: const Icon(Icons.person_outline),
                             ),
                           ),
                           const SizedBox(height: 12),
-                          TextField(
-                            controller: passwordController,
-                            obscureText: true,
-                            decoration: InputDecoration(
-                              hintText: 'password'.tr(),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          BlocConsumer<RegisterBloc, BaseState<void>>(
+                          BlocConsumer<ForgetPasswordBloc, BaseState<void>>(
                             listener: (context, state) async {
                               if (state is SuccessState) {
                                 final result =
                                     await Navigator.pushNamed<OtpResult>(
-                                      context,
-                                      RoutesConstants.otpScreen,
-                                    );
+                                  context,
+                                  RoutesConstants.otpScreen,
+                                );
 
                                 if (result != null && result.verified) {
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
-                                    RoutesConstants.accountCreatedScreen,
-                                    (route) => false,
+                                    RoutesConstants.mainScreen,
+                                        (route) => false,
                                   );
                                 }
-                              } else if (state is FailureState) {
+                              } else if (state case FailureState(
+                                :final message,
+                              )) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(state.message)),
+                                  SnackBar(content: Text(message)),
                                 );
                               }
                             },
                             builder: (context, state) {
                               return ElevatedButton(
                                 onPressed: () {
-                                  context.read<RegisterBloc>().add(
-                                    RegisterSubmitted(
-                                      nameController.text,
-                                      phoneController.text,
-                                      passwordController.text,
-                                    ),
+                                  context.read<ForgetPasswordBloc>().add(
+                                    ForgetPassword(phoneController.text),
                                   );
                                 },
-                                child: Text('register'.tr()),
+                                child: Text('send_code'.tr()),
                               );
                             },
                           ),
                           const SizedBox(height: 12),
                           Center(
-                            child: Text.rich(
-                              TextSpan(
-                                text: 'already_have_an_account'.tr(),
+                            child: GestureDetector(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                'login'.tr(),
                                 style: TextStyle(
-                                  color:
-                                      Theme.of(
-                                        context,
-                                      ).colorScheme.onBackground,
+                                  color: primaryColor,
+                                  decoration: TextDecoration.none,
                                 ),
-                                children: [
-                                  TextSpan(
-                                    text: 'log_in'.tr(),
-                                    style: TextStyle(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                    recognizer:
-                                        TapGestureRecognizer()
-                                          ..onTap =
-                                              () => Navigator.pop(context),
-                                  ),
-                                ],
                               ),
                             ),
                           ),

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:sailors/src/data/models/params/confirm_phone_params.dart';
 import 'package:sailors/src/data/models/params/register_params.dart';
 import '../../core/resources/data_state.dart';
 import '../../core/utils/constants.dart';
@@ -59,5 +60,35 @@ class AuthRepositoryImpl implements AuthRepository {
     } on DioException catch (e) {
       return DataFailed(e);
     }
+  }
+
+  @override
+  Future<DataState<void>> sendOtpCode(String phone) async {
+    try {
+      await Future.delayed(
+        const Duration(milliseconds: requestMockDelayInMillis),
+      );
+      return DataSuccess(null);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<UserModel>> confirmOtp(
+    ConfirmPhoneParams confirmPhoneParams,
+  ) async {
+    await Future.delayed(
+      const Duration(milliseconds: requestMockDelayInMillis),
+    );
+    return DataSuccess(UserModel(name: "", phone: "", token: ""));
+  }
+
+  @override
+  Future<DataState<void>> updatePassword(String password) async {
+    await Future.delayed(
+      const Duration(milliseconds: requestMockDelayInMillis),
+    );
+    return DataSuccess(null);
   }
 }

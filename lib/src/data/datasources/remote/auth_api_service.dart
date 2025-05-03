@@ -21,4 +21,18 @@ abstract class AuthApiService {
     @Field('phone') String phone,
     @Field('password') String password,
   );
+
+  @POST('/sendOtpCode')
+  Future<HttpResponse<void>> sendOtpCode(@Field('phone') String phone);
+
+  @POST('/confirmOtp')
+  Future<HttpResponse<UserModel>> confirmOtp(
+    @Field('phone') String phone,
+    @Field('otp') String otp,
+  );
+
+  @POST('/updatePassword')
+  Future<HttpResponse<UserModel>> updatePassword(
+    @Field('password') String password,
+  );
 }

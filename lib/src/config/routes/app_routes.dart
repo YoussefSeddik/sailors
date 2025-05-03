@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sailors/src/presentation/screens/otp/otp_screen.dart';
 
+import '../../presentation/models/otp_result_model.dart';
+import '../../presentation/screens/account_created/account_created_screen.dart';
 import '../../presentation/screens/add_ad_screen.dart';
 import '../../presentation/screens/ads_screen.dart';
-import '../../presentation/screens/choose_login_register_screen.dart';
+import '../../presentation/screens/forget_password/forget_password_screen.dart';
 import '../../presentation/screens/home_screen.dart';
 import '../../presentation/screens/login/login_screen.dart';
 import '../../presentation/screens/main_screen.dart';
@@ -17,9 +19,6 @@ mixin AppRoutes {
     switch (settings.name) {
       case RoutesConstants.initial:
         return _materialRoute(const WelcomeScreen());
-
-      case RoutesConstants.screenChooseLoginRegister:
-        return _materialRoute(const ChooseLoginRegisterScreen());
 
       case RoutesConstants.mainScreen:
         return _materialRoute(const MainScreen());
@@ -46,7 +45,13 @@ mixin AppRoutes {
         return _materialRoute(const RegisterScreen());
 
       case RoutesConstants.otpScreen:
-        return _materialRoute(const OtpScreen());
+        return _materialRoute<OtpResult>(const OtpScreen());
+
+      case RoutesConstants.accountCreatedScreen:
+        return _materialRoute(const AccountCreatedScreen());
+
+      case RoutesConstants.forgetPasswordScreen:
+        return _materialRoute(const ForgetPasswordScreen());
 
       default:
         return _materialRoute(
@@ -54,9 +59,8 @@ mixin AppRoutes {
         );
     }
   }
-
-  static Route<dynamic> _materialRoute(Widget view) {
-    return MaterialPageRoute(builder: (_) => view);
+  static Route<T> _materialRoute<T>(Widget view) {
+    return MaterialPageRoute<T>(builder: (_) => view);
   }
 }
 
@@ -73,4 +77,8 @@ class RoutesConstants {
   static const loginScreen = "/LoginScreen";
   static const registerScreen = "/RegisterScreen";
   static const otpScreen = "/OtpScreen";
+  static const accountCreatedScreen = "/AccountCreatedScreen";
+  static const forgetPasswordScreen = "/ForgetPasswordScreen";
+
+  static const changePasswordScreen = "/ChangePasswordScreen";
 }
