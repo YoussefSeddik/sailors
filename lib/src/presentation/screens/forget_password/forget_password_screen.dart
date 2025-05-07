@@ -69,7 +69,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 if (result != null && result.verified) {
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
-                                    RoutesConstants.mainScreen,
+                                    RoutesConstants.changePasswordScreen,
                                         (route) => false,
                                   );
                                 }

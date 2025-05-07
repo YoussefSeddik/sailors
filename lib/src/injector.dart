@@ -3,10 +3,12 @@ import 'package:get_it/get_it.dart';
 import 'package:sailors/src/domain/usecaes/cofirm_phone_usecase.dart';
 import 'package:sailors/src/domain/usecaes/register_usecase.dart';
 import 'package:sailors/src/domain/usecaes/send_otp_usecase.dart';
+import 'package:sailors/src/domain/usecaes/update_password_usecase.dart';
 import 'package:sailors/src/presentation/screens/forget_password/forget_password_bloc.dart';
 import 'package:sailors/src/presentation/screens/login/login_bloc.dart';
 import 'package:sailors/src/presentation/screens/otp/otp_bloc.dart';
 import 'package:sailors/src/presentation/screens/register/register_bloc.dart';
+import 'package:sailors/src/presentation/screens/update_password_screen/update_password_bloc.dart';
 import 'data/datasources/remote/auth_api_service.dart';
 import 'data/repositories/auth_repository_impl.dart';
 import 'domain/repositories/auth_repository.dart';
@@ -27,10 +29,12 @@ Future<void> initializeDependencies() async {
   injector.registerSingleton<RegisterUseCase>(RegisterUseCase(injector()));
   injector.registerSingleton<ConfirmPhoneUseCase>(ConfirmPhoneUseCase(injector()));
   injector.registerSingleton<SendOtpUseCase>(SendOtpUseCase(injector()));
+  injector.registerSingleton<UpdatePasswordUseCase>(UpdatePasswordUseCase(injector()));
 
   // Blocs
   injector.registerFactory<LoginBloc>(() => LoginBloc(injector()));
   injector.registerFactory<RegisterBloc>(() => RegisterBloc(injector()));
   injector.registerFactory<OtpBloc>(() => OtpBloc(injector(), injector()));
   injector.registerFactory<ForgetPasswordBloc>(() => ForgetPasswordBloc(injector()));
+  injector.registerFactory<UpdatePasswordBloc>(() => UpdatePasswordBloc(injector()));
 }

@@ -82,7 +82,8 @@ class RegisterScreen extends StatelessWidget {
                                 if (result != null && result.verified) {
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
-                                    RoutesConstants.accountCreatedScreen,
+                                    RoutesConstants.successfulStateScreen,
+                                    arguments: 'account_created_successfully'.tr(),
                                     (route) => false,
                                   );
                                 }

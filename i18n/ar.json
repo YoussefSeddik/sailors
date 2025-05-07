@@ -24,5 +24,10 @@
   "browse_now": "تصفح الان",
   "forgot_password_without?": "نسيت كلمة السر",
   "enter_phone_number": "ادخل رقم الهاتف",
-  "send_code": "ارسل الكود"
+  "send_code": "ارسل الكود",
+  "change_password": "تغيير كلمة السر",
+  "new_password": "كلمة السر الجديدة",
+  "confirm_password": "تأكيد كلمة السر",
+  "save_data": "حفظ البيانات",
+  "password_changed_successfully": "تم تغيير كلمة السر بنجاح"
 }

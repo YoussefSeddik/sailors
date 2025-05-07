@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:sailors/src/presentation/screens/profile_screen.dart';
+import '../../core/widgets/svg_nav_icon.dart';
 import 'add_ad_screen.dart';
 import 'ads_screen.dart';
 import 'home_screen.dart';
 import 'notifications_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.light;
@@ -56,42 +58,95 @@ class _MainScreenState extends State<MainScreen> {
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
             locale: context.locale,
-            home: Scaffold(
-              body: _screens[_selectedIndex],
-              bottomNavigationBar: BottomNavigationBar(
-                currentIndex: _selectedIndex,
-                onTap: _onItemTapped,
-                type: BottomNavigationBarType.fixed,
-                selectedItemColor: isDark ? Colors.tealAccent : Colors.blue,
-                unselectedItemColor: isDark ? Colors.grey[400] : Colors.grey,
-                backgroundColor: Theme.of(context).colorScheme.surface,
-                items: [
-                  BottomNavigationBarItem(
-                    icon: const Icon(Icons.home),
-                    label: 'home'.tr(),
+            home: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Scaffold(
+                  body: _screens[_selectedIndex],
+                  bottomNavigationBar: BottomNavigationBar(
+                    currentIndex: _selectedIndex,
+                    onTap: (index) {
+                      setState(() {
+                        if (index == 2) return;
+                        _selectedIndex = index;
+                      });
+                    },
+                    type: BottomNavigationBarType.fixed,
+                    selectedItemColor: isDark ? Colors.tealAccent : Colors.blue,
+                    unselectedItemColor:
+                        isDark ? Colors.grey[400] : Colors.grey,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    items: [
+                      BottomNavigationBarItem(
+                        icon: ThemedSvgIcon(
+                          assetPath: 'images/home_icon.svg',
+                          color: _getNavIconColor(0, isDark),
+                        ),
+                        label: 'home'.tr(),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: ThemedSvgIcon(
+                          assetPath: 'images/ad_icon.svg',
+                          color: _getNavIconColor(1, isDark),
+                        ),
+                        label: 'my_ads'.tr(),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: IgnorePointer(
+                          ignoring: true,
+                          child: SizedBox(
+                            width: 24,
+                            height: 24,
+                          ),
+                        ),
+                        label: 'add_ad'.tr(),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: ThemedSvgIcon(
+                          assetPath: 'images/notification_icon.svg',
+                          color: _getNavIconColor(3, isDark),
+                        ),
+                        label: 'notifications'.tr(),
+                      ),
+                      BottomNavigationBarItem(
+                        icon: ThemedSvgIcon(
+                          assetPath: 'images/profile_icon.svg',
+                          color: _getNavIconColor(4, isDark),
+                        ),
+                        label: 'profile'.tr(),
+                      ),
+                    ],
                   ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(Icons.store),
-                    label: 'my_ads'.tr(),
+                ),
+                Positioned(
+                  bottom: 30,
+                  child: GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedIndex = 2;
+                      });
+                    },
+                    child: SizedBox(
+                      width: 56,
+                      height: 56,
+                      child: SvgPicture.asset('images/add_ad_icon.svg'),
+                    ),
                   ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(Icons.add_a_photo),
-                    label: 'add_ad'.tr(),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(Icons.notifications),
-                    label: 'notifications'.tr(),
-                  ),
-                  BottomNavigationBarItem(
-                    icon: const Icon(Icons.person),
-                    label: 'profile'.tr(),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
       ),
     );
+  }
+
+  Color _getNavIconColor(int index, bool isDark) {
+    final isSelected = _selectedIndex == index;
+    if (isSelected) {
+      return isDark ? Colors.tealAccent : Colors.blue;
+    } else {
+      return isDark ? Colors.grey[400]! : Colors.grey;
+    }
   }
 }

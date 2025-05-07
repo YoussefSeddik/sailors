@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:sailors/src/config/routes/app_routes.dart';
 
-class AccountCreatedScreen extends StatelessWidget {
-  const AccountCreatedScreen({super.key});
+class SuccessfulStateScreen extends StatelessWidget {
+  final String message;
+
+  const SuccessfulStateScreen({
+    super.key,
+    required this.message,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class AccountCreatedScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'account_created_successfully'.tr(),
+                  message,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
@@ -29,7 +34,8 @@ class AccountCreatedScreen extends StatelessWidget {
                         context,
                         RoutesConstants.mainScreen,
                             (route) => false,
-                      );                    },
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                       shape: RoundedRectangleBorder(

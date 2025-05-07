@@ -24,5 +24,10 @@
   "browse_now": "Browse now",
   "forgot_password_without?": "Forgot password",
   "enter_phone_number": "Enter phone number",
-  "send_code": "Send code"
+  "send_code": "Send code",
+  "change_password": "Change password",
+  "new_password": "New password",
+  "confirm_password": "Confirm password",
+  "save_data": "Save data",
+  "password_changed_successfully": "Password changed successfully"
 }
