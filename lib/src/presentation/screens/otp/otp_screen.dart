@@ -9,19 +9,23 @@ import 'otp_bloc.dart';
 import 'otp_event.dart';
 
 class OtpScreen extends StatelessWidget {
-  const OtpScreen({super.key});
+  final String phone;
+
+  const OtpScreen({super.key, required this.phone});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => injector<OtpBloc>(),
-      child: const _OtpView(),
+      child: _OtpView(phone: phone),
     );
   }
 }
 
 class _OtpView extends StatefulWidget {
-  const _OtpView();
+  final String phone;
+
+  const _OtpView({required this.phone});
 
   @override
   State<_OtpView> createState() => _OtpViewState();
@@ -117,11 +121,14 @@ class _OtpViewState extends State<_OtpView> {
                                 content: Text('verified_successfully'.tr()),
                               ),
                             );
-                            Navigator.pop(context, OtpResult(
-                              phoneNumber: "+201234567890",
-                              // or any dynamic value
-                              verified: true,
-                            ));
+                            Navigator.pop(
+                              context,
+                              OtpResult(
+                                phoneNumber: "+201234567890",
+                                // or any dynamic value
+                                verified: true,
+                              ),
+                            );
                           } else if (state case FailureState(:final message)) {
                             ScaffoldMessenger.of(
                               context,
@@ -131,7 +138,9 @@ class _OtpViewState extends State<_OtpView> {
                         builder: (context, state) {
                           return ElevatedButton(
                             onPressed: () {
-                              context.read<OtpBloc>().add(OtpSubmitted(_otp,"01003760243"));
+                              context.read<OtpBloc>().add(
+                                OtpSubmitted(_otp, widget.phone),
+                              );
                             },
                             child: Text('confirm'.tr()),
                           );
@@ -149,7 +158,9 @@ class _OtpViewState extends State<_OtpView> {
                           return TextButton(
                             onPressed:
                                 enabled
-                                    ? () => bloc.add(OtpResendRequested("01003760243"))
+                                    ? () => bloc.add(
+                                      OtpResendRequested(widget.phone),
+                                    )
                                     : null,
                             child: Text(
                               enabled

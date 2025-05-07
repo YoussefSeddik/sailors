@@ -46,11 +46,13 @@ mixin AppRoutes {
         return _materialRoute(const RegisterScreen());
 
       case RoutesConstants.otpScreen:
-        return _materialRoute<OtpResult>(const OtpScreen());
+        final message = settings.arguments as String? ?? '';
+        return _materialRoute<OtpResult>(OtpScreen(phone: message));
 
       case RoutesConstants.successfulStateScreen:
         final message = settings.arguments as String? ?? '';
         return _materialRoute(SuccessfulStateScreen(message: message));
+
       case RoutesConstants.forgetPasswordScreen:
         return _materialRoute(const ForgetPasswordScreen());
 

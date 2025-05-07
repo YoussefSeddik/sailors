@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:sailors/src/data/models/auth_model.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../injector.dart';
@@ -72,18 +73,19 @@ class RegisterScreen extends StatelessWidget {
                           const SizedBox(height: 10),
                           BlocConsumer<RegisterBloc, BaseState<void>>(
                             listener: (context, state) async {
-                              if (state is SuccessState) {
+                              if (state is SuccessState<AuthModel>) {
                                 final result =
                                     await Navigator.pushNamed<OtpResult>(
                                       context,
                                       RoutesConstants.otpScreen,
+                                      arguments: state.data.user.phone,
                                     );
-
                                 if (result != null && result.verified) {
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     RoutesConstants.successfulStateScreen,
-                                    arguments: 'account_created_successfully'.tr(),
+                                    arguments:
+                                        'account_created_successfully'.tr(),
                                     (route) => false,
                                   );
                                 }
