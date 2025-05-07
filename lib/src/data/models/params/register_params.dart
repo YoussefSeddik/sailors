@@ -8,4 +8,8 @@ class RegisterParams {
     required this.phone,
     required this.password,
   });
+
+  Map<String, dynamic> toJson() {
+    return {'name': name, 'phone': phone, 'password': password};
+  }
 }

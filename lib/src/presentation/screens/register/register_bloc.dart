@@ -1,3 +1,4 @@
+import 'package:sailors/src/data/models/auth_model.dart';
 import 'package:sailors/src/domain/usecaes/register_usecase.dart';
 import 'package:sailors/src/presentation/screens/register/register_event.dart';
 import '../../../core/bloc/base_state.dart';
@@ -21,7 +22,7 @@ class RegisterBloc extends BlocWithState<RegisterEvent, BaseState<void>> {
             ),
           );
           if (result is DataSuccess) {
-            yield SuccessState(null);
+            yield SuccessState<AuthModel?>(result.data);
           } else {
             yield FailureState(result.error?.message ?? 'Unknown error');
           }

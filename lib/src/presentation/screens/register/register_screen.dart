@@ -73,12 +73,12 @@ class RegisterScreen extends StatelessWidget {
                           const SizedBox(height: 10),
                           BlocConsumer<RegisterBloc, BaseState<void>>(
                             listener: (context, state) async {
-                              if (state is SuccessState<AuthModel>) {
+                              if (state is SuccessState<AuthModel?>) {
                                 final result =
                                     await Navigator.pushNamed<OtpResult>(
                                       context,
                                       RoutesConstants.otpScreen,
-                                      arguments: state.data.user.phone,
+                                      arguments: state.data?.user.phone,
                                     );
                                 if (result != null && result.verified) {
                                   Navigator.pushNamedAndRemoveUntil(

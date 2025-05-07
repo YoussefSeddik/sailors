@@ -6,7 +6,7 @@ import '../datasources/remote/auth_api_service.dart';
 import '../models/auth_model.dart';
 import '../models/params/confirm_phone_params.dart';
 import '../models/params/login_params.dart';
-import '../models/params/register_params.dart'; // 👈 import your handler
+import '../models/params/register_params.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   final AuthApiService _api;
@@ -20,9 +20,7 @@ class AuthRepositoryImpl implements AuthRepository {
 
   @override
   Future<DataState<AuthModel>> register(RegisterParams params) {
-    return handleResponse(
-      _api.register(params.name, params.phone, params.password),
-    );
+    return handleResponse(_api.register(params));
   }
 
   @override

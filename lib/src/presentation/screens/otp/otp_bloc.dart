@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
+import 'package:sailors/src/data/models/auth_model.dart';
 import 'package:sailors/src/domain/usecaes/cofirm_phone_usecase.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../core/resources/data_state.dart';
@@ -33,7 +34,7 @@ class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
     );
 
     if (result is DataSuccess) {
-      emit(SuccessState(null));
+      emit(SuccessState<AuthModel?>(result.data));
     } else {
       emit(FailureState(result.error?.message ?? "OTP verification failed"));
     }
