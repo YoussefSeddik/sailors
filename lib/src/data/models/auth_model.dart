@@ -3,6 +3,8 @@ import 'package:sailors/src/data/models/user_model.dart';
 class AuthModel {
   final String token;
   final UserModel user;
+  static const storageKey = 'auth_model';
+
 
   AuthModel({required this.token, required this.user});
 

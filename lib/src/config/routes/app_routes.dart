@@ -13,7 +13,7 @@ import '../../presentation/screens/profile_screen.dart';
 import '../../presentation/screens/register/register_screen.dart';
 import '../../presentation/screens/successful_state_screen.dart';
 import '../../presentation/screens/update_password_screen/update_password_screen.dart';
-import '../../presentation/screens/welcome_screen.dart';
+import '../../presentation/screens/welcome_screen/welcome_screen.dart';
 
 mixin AppRoutes {
   static Route onGenerateRoutes(RouteSettings settings) {

@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sailors/src/domain/usecaes/cofirm_phone_usecase.dart';
 import 'package:sailors/src/domain/usecaes/register_usecase.dart';
@@ -9,6 +10,8 @@ import 'package:sailors/src/presentation/screens/login/login_bloc.dart';
 import 'package:sailors/src/presentation/screens/otp/otp_bloc.dart';
 import 'package:sailors/src/presentation/screens/register/register_bloc.dart';
 import 'package:sailors/src/presentation/screens/update_password_screen/update_password_bloc.dart';
+import 'core/caching/local_storage_service.dart';
+import 'core/caching/local_storage_service_impl.dart';
 import 'data/datasources/remote/auth_api_service.dart';
 import 'data/repositories/auth_repository_impl.dart';
 import 'domain/repositories/auth_repository.dart';
@@ -17,6 +20,9 @@ import 'domain/usecaes/login_usecase.dart';
 final injector = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  injector.registerSingleton<FlutterSecureStorage>(const FlutterSecureStorage());
+  injector.registerSingleton<LocalStorageService>(SecureStorageService(injector<FlutterSecureStorage>()));
+
   // Dio client
   injector.registerSingleton<Dio>(Dio());
 
@@ -25,9 +31,9 @@ Future<void> initializeDependencies() async {
   injector.registerSingleton<AuthRepository>(AuthRepositoryImpl(injector()));
 
   // UseCases
-  injector.registerSingleton<LoginUseCase>(LoginUseCase(injector()));
+  injector.registerSingleton<LoginUseCase>(LoginUseCase(injector(), injector()));
   injector.registerSingleton<RegisterUseCase>(RegisterUseCase(injector()));
-  injector.registerSingleton<ConfirmPhoneUseCase>(ConfirmPhoneUseCase(injector()));
+  injector.registerSingleton<ConfirmPhoneUseCase>(ConfirmPhoneUseCase(injector(), injector()));
   injector.registerSingleton<SendOtpUseCase>(SendOtpUseCase(injector()));
   injector.registerSingleton<UpdatePasswordUseCase>(UpdatePasswordUseCase(injector()));
 
