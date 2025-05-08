@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
-import 'package:sailors/src/presentation/screens/profile_screen.dart';
+import 'package:sailors/src/presentation/screens/profile_screen/profile_screen.dart';
 import '../../core/widgets/svg_nav_icon.dart';
 import 'add_ad_screen.dart';
 import 'ads_screen.dart';
@@ -94,10 +94,7 @@ class _MainScreenState extends State<MainScreen> {
                       BottomNavigationBarItem(
                         icon: IgnorePointer(
                           ignoring: true,
-                          child: SizedBox(
-                            width: 24,
-                            height: 24,
-                          ),
+                          child: SizedBox(width: 24, height: 24),
                         ),
                         label: 'add_ad'.tr(),
                       ),

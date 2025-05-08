@@ -9,7 +9,7 @@ import '../../presentation/screens/home_screen.dart';
 import '../../presentation/screens/login/login_screen.dart';
 import '../../presentation/screens/main_screen.dart';
 import '../../presentation/screens/notifications_screen.dart';
-import '../../presentation/screens/profile_screen.dart';
+import '../../presentation/screens/profile_screen/profile_screen.dart';
 import '../../presentation/screens/register/register_screen.dart';
 import '../../presentation/screens/successful_state_screen.dart';
 import '../../presentation/screens/update_password_screen/update_password_screen.dart';

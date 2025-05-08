@@ -29,5 +29,12 @@
   "new_password": "كلمة السر الجديدة",
   "confirm_password": "تأكيد كلمة السر",
   "save_data": "حفظ البيانات",
-  "password_changed_successfully": "تم تغيير كلمة السر بنجاح"
+  "password_changed_successfully": "تم تغيير كلمة السر بنجاح",
+  "personal_profile": "الملف الشخصي",
+  "ads": "الاعلانات",
+  "current": "الحالية",
+  "previous": "السابقة",
+  "delete": "حذف",
+  "view_ad": "مشاهدة الاعلان",
+  "expired": "انتهى الاعلان"
 }
