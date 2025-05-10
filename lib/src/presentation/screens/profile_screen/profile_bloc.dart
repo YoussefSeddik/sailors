@@ -13,7 +13,6 @@ class ProfileBloc extends BlocWithState<ProfileEvent, BaseState<UserModel>> {
     on<LoadProfile>((event, emit) async {
       await emit.forEach(
         runBlocProcess(() async* {
-          yield LoadingState();
           final authModel = await storage.getModelAsync<AuthModel>(
             AuthModel.storageKey,
             AuthModel.fromJson,

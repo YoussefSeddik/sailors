@@ -5,12 +5,16 @@ class SailorsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool centerTitle;
   final bool showBackButton;
+  final Widget? trailingIconWidget;
+  final VoidCallback? onTrailingPressed;
 
   const SailorsAppBar({
     super.key,
     required this.title,
     this.centerTitle = true,
     this.showBackButton = true,
+    this.trailingIconWidget,
+    this.onTrailingPressed,
   });
 
   @override
@@ -19,13 +23,22 @@ class SailorsAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: showBackButton ? const BackButton() : null,
       title: Text(
         title.tr(),
-        style: TextStyle(fontSize: 18, color: Colors.black),
+        style: const TextStyle(fontSize: 18, color: Colors.black),
       ),
       centerTitle: centerTitle,
       elevation: 0,
       backgroundColor: Colors.transparent,
       iconTheme: const IconThemeData(color: Colors.black),
       foregroundColor: Colors.black,
+      actions:
+          trailingIconWidget != null
+              ? [
+                IconButton(
+                  icon: trailingIconWidget!,
+                  onPressed: onTrailingPressed,
+                ),
+              ]
+              : null,
     );
   }
 

@@ -46,6 +46,7 @@ flutter:
     - images/notification_icon.svg
     - images/profile_icon.svg
     - images/back_icon.svg
+    - images/settings_icon.svg
     - i18n/en.json
     - i18n/ar.json
   fonts:
