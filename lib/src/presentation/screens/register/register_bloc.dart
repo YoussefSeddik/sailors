@@ -10,10 +10,10 @@ class RegisterBloc extends BlocWithState<RegisterEvent, BaseState<void>> {
   final AppUseCases appUseCases;
 
   RegisterBloc(this.appUseCases) : super(InitialState()) {
-    on<RegisterSubmitted>((event, emit) async {
-      await emit.forEach(
+    on<RegisterSubmitted>((event, stateEmitter) async {
+      await stateEmitter.forEach(
         runBlocProcess(() async* {
-          emit(LoadingState());
+          stateEmitter(LoadingState());
           final result = await appUseCases.register(
             RegisterParams(
               name: event.name,

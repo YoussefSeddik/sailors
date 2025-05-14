@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sailors/src/presentation/screens/otp/otp_screen.dart';
+import 'package:sailors/src/presentation/screens/settings/settings_screen.dart';
 
 import '../../presentation/models/otp_result_model.dart';
 import '../../presentation/screens/add_ad_screen.dart';
@@ -59,6 +60,9 @@ mixin AppRoutes {
       case RoutesConstants.changePasswordScreen:
         return _materialRoute(const UpdatePasswordScreen());
 
+      case RoutesConstants.settingsScreen:
+        return _materialRoute(const SettingsScreen());
+
       default:
         return _materialRoute(
           const Scaffold(body: Center(child: Text("Route not found"))),
@@ -87,4 +91,5 @@ class RoutesConstants {
   static const successfulStateScreen = "/SuccessfulStateScreen";
   static const forgetPasswordScreen = "/ForgetPasswordScreen";
   static const changePasswordScreen = "/ChangePasswordScreen";
+  static const settingsScreen = "/SettingsScreen";
 }

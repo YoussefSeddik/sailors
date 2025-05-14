@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:sailors/src/config/themes/fonts/app_text_styles.dart';
+
 class SailorsAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final bool centerTitle;
   final bool showBackButton;
-  final Widget? trailingIconWidget;
-  final VoidCallback? onTrailingPressed;
+  final List<Widget>? trailing;
 
   const SailorsAppBar({
     super.key,
     required this.title,
     this.centerTitle = true,
     this.showBackButton = true,
-    this.trailingIconWidget,
-    this.onTrailingPressed,
+    this.trailing,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return AppBar(
       leading: showBackButton ? const BackButton() : null,
       title: Text(
         title.tr(),
-        style: const TextStyle(fontSize: 18, color: Colors.black),
+        style: AppTextStyles.bold.copyWith(
+          fontSize: 18,
+          color: theme.colorScheme.onSurface,
+        ),
       ),
       centerTitle: centerTitle,
-      backgroundColor: Colors.white,
+      backgroundColor: theme.colorScheme.background,
       elevation: 0,
-      iconTheme: const IconThemeData(color: Colors.black),
-      foregroundColor: Colors.black,
-      actions:
-          trailingIconWidget != null
-              ? [
-                IconButton(
-                  icon: trailingIconWidget!,
-                  onPressed: onTrailingPressed,
-                ),
-              ]
-              : null,
+      iconTheme: IconThemeData(color: theme.colorScheme.onSurface),
+      foregroundColor: theme.colorScheme.onSurface,
+      actions: trailing,
     );
   }
 

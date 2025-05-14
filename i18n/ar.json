@@ -37,5 +37,15 @@
   "delete": "حذف",
   "view_ad": "مشاهدة الاعلان",
   "expired": "انتهى الاعلان",
-  "ad_expires_in": "سينتهي بعد"
+  "ad_expires_in": "سينتهي بعد",
+  "language_ar": "العربية",
+  "language_en": "الإنجليزية",
+  "settings": "الإعدادات",
+  "edit_profile": "تعديل الملف الشخصي",
+  "complaints": "الشكاوى و الاقتراحات",
+  "contact_us": "تواصل معنا",
+  "about_app": "عن التطبيق",
+  "change_language": "تغيير لغة التطبيق",
+  "delete_account": "حذف الحساب",
+  "logout": "تسجيل الخروج"
 }

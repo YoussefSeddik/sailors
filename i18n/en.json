@@ -37,5 +37,15 @@
   "delete": "Delete",
   "view_ad": "View Ad",
   "expired": "Ad Expired",
-  "ad_expires_in": "Ends in"
+  "ad_expires_in": "Ends in",
+  "language_ar": "Arabic",
+  "language_en": "English",
+  "settings": "Settings",
+  "edit_profile": "Edit Profile",
+  "complaints": "Complaints & Suggestions",
+  "contact_us": "Contact Us",
+  "about_app": "About the App",
+  "change_language": "Change App Language",
+  "delete_account": "Delete Account",
+  "logout": "Log Out"
 }

@@ -14,12 +14,14 @@ import '../../../core/widgets/sailors_app_bar.dart';
 import '../../../data/models/ad_model.dart';
 import '../../../data/models/user_model.dart';
 import '../../../widgets/loading_overlay.dart';
+import '../settings/settings_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final locale = context.locale;
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => GetIt.I<ProfileBloc>()..add(LoadProfile())),
@@ -31,12 +33,20 @@ class ProfileScreen extends StatelessWidget {
         appBar: SailorsAppBar(
           showBackButton: false,
           title: 'personal_profile',
-          trailingIconWidget: SvgPicture.asset(
-            'images/settings_icon.svg',
-            width: 24,
-            height: 24,
-          ),
-          onTrailingPressed: () {},
+          trailing: [
+            IconButton(
+              icon: SvgPicture.asset(
+                'images/settings_icon.svg',
+                width: 24,
+                height: 24,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
+                );
+              },
+            ),
+          ],
         ),
         body: SafeArea(
           child: BlocBuilder<ProfileBloc, BaseState<UserModel>>(

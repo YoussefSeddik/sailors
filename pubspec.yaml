@@ -50,6 +50,14 @@ flutter:
     - images/profile_icon.svg
     - images/back_icon.svg
     - images/settings_icon.svg
+    - images/settings_about_app_icon.svg
+    - images/settings_change_password_icon.svg
+    - images/settings_contact_us_icon.svg
+    - images/settings_profile_icon.svg
+    - images/settings_report_icon.svg
+    - images/whatsapp_icon.svg
+    - images/tiktok_icon.svg
+    - images/facebook_icon.svg
     - i18n/en.json
     - i18n/ar.json
   fonts:
