@@ -24,9 +24,10 @@ dependencies:
   shared_preferences: ^2.2.2
   provider: ^6.1.2
   motion_toast: ^2.7.5
-  easy_localization: ^3.0.3
   flutter_svg: ^2.0.7
   flutter_secure_storage: ^9.0.0
+  easy_localization: ^3.0.7+1
+  easy_localization_loader: ^2.0.2
 
 dev_dependencies:
   flutter_test:
@@ -34,6 +35,8 @@ dev_dependencies:
   flutter_lints: ^5.0.0
   build_runner: ^2.4.6
   retrofit_generator: ^9.1.9
+  easy_localization_generator: ^0.3.3
+
 
 flutter:
   uses-material-design: true
@@ -50,17 +53,26 @@ flutter:
     - i18n/en.json
     - i18n/ar.json
   fonts:
-    - family: Sailor
+    - family: SailorLight
       fonts:
         - asset: fonts/light.ttf
-          weight: 300
+
+    - family: SailorRegular
+      fonts:
         - asset: fonts/regular.ttf
-          weight: 400
+
+    - family: SailorMedium
+      fonts:
         - asset: fonts/medium.ttf
-          weight: 500
+
+    - family: SailorBold
+      fonts:
         - asset: fonts/bold.ttf
-          weight: 700
+
+    - family: SailorExtraBold
+      fonts:
         - asset: fonts/extra_bold.ttf
-          weight: 800
+
+    - family: SailorBlack
+      fonts:
         - asset: fonts/black.ttf
-          weight: 900

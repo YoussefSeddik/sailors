@@ -26,8 +26,8 @@ class SailorsAppBar extends StatelessWidget implements PreferredSizeWidget {
         style: const TextStyle(fontSize: 18, color: Colors.black),
       ),
       centerTitle: centerTitle,
+      backgroundColor: Colors.white,
       elevation: 0,
-      backgroundColor: Colors.transparent,
       iconTheme: const IconThemeData(color: Colors.black),
       foregroundColor: Colors.black,
       actions:

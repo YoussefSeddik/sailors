@@ -6,8 +6,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_ads_bloc.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_bloc.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_event.dart';
+import '../../../config/themes/app_colors.dart';
+import '../../../config/themes/fonts/app_text_styles.dart';
 import '../../../core/bloc/base_state.dart';
-import '../../../core/widgets/safe_network_image.dart';
+import '../../../core/widgets/ad_widget.dart';
 import '../../../core/widgets/sailors_app_bar.dart';
 import '../../../data/models/ad_model.dart';
 import '../../../data/models/user_model.dart';
@@ -34,9 +36,7 @@ class ProfileScreen extends StatelessWidget {
             width: 24,
             height: 24,
           ),
-          onTrailingPressed: () {
-            // handle settings press
-          },
+          onTrailingPressed: () {},
         ),
         body: SafeArea(
           child: BlocBuilder<ProfileBloc, BaseState<UserModel>>(
@@ -44,6 +44,9 @@ class ProfileScreen extends StatelessWidget {
               return BlocBuilder<ProfileAdsBloc, BaseState<List<AdModel>>>(
                 builder: (context, adsState) {
                   final isAdsLoading = adsState is LoadingState;
+                  final isPrevious =
+                      adsState is SuccessState<List<AdModel>> &&
+                      adsState.data?.firstOrNull?.isExpired == true;
 
                   return LoadingOverlay(
                     isLoading: isAdsLoading,
@@ -51,12 +54,11 @@ class ProfileScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(16),
                       child: Column(
                         children: [
-                          // --- Profile Info ---
                           if (profileState is SuccessState<UserModel>) ...[
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   width: 80,
                                   height: 80,
                                   child: CircleAvatar(
@@ -64,7 +66,6 @@ class ProfileScreen extends StatelessWidget {
                                     backgroundImage: NetworkImage(
                                       "https://dummyimage.com/300",
                                     ),
-                                    onBackgroundImageError: (_, __) {},
                                   ),
                                 ),
                                 const SizedBox(height: 16),
@@ -72,16 +73,11 @@ class ProfileScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+                                    Text('name'.tr()),
                                     Text(
-                                      'name'.tr(),
-                                      style: TextStyle(
-                                        color:
-                                            Theme.of(
-                                              context,
-                                            ).colorScheme.onSurface,
-                                      ),
+                                      profileState.data?.name ?? "",
+                                      style: AppTextStyles.bold,
                                     ),
-                                    Text(profileState.data.name),
                                   ],
                                 ),
                                 const SizedBox(height: 14),
@@ -89,103 +85,104 @@ class ProfileScreen extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+                                    Text('phone_number'.tr()),
                                     Text(
-                                      'phone_number'.tr(),
-                                      style: TextStyle(
-                                        color:
-                                            Theme.of(
-                                              context,
-                                            ).colorScheme.onSurface,
-                                      ),
+                                      profileState.data?.phone ?? "",
+                                      style: AppTextStyles.bold,
                                     ),
-                                    Text(profileState.data.phone),
                                   ],
                                 ),
                               ],
                             ),
                           ],
-                          const SizedBox(height: 16),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed:
-                                    () => context.read<ProfileAdsBloc>().add(
-                                      LoadPreviousAds(),
-                                    ),
-                                child: Text('previous'.tr()),
-                              ),
-                              const SizedBox(width: 10),
-                              ElevatedButton(
-                                onPressed:
-                                    () => context.read<ProfileAdsBloc>().add(
-                                      LoadCurrentAds(),
-                                    ),
-                                child: Text('current'.tr()),
-                              ),
-                            ],
+                          const SizedBox(height: 24),
+                          SizedBox(
+                            width: double.infinity,
+                            child: Text(
+                              "ads".tr(),
+                              textAlign: TextAlign.start,
+                              style: AppTextStyles.bold,
+                            ),
                           ),
-
                           const SizedBox(height: 16),
-
-                          // --- Ads List ---
+                          Container(
+                            height: 48,
+                            decoration: BoxDecoration(
+                              color: AppColors.color_F5F5F5,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: InkWell(
+                                    onTap:
+                                        () => context
+                                            .read<ProfileAdsBloc>()
+                                            .add(LoadPreviousAds()),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color:
+                                            isPrevious
+                                                ? AppColors.color_51AACC
+                                                : Colors.transparent,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                      ),
+                                      child: Text(
+                                        'previous'.tr(),
+                                        style: AppTextStyles.bold.copyWith(
+                                          color:
+                                              isPrevious
+                                                  ? AppColors.color_FFFFFF
+                                                  : AppColors.color_CCCCCC,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap:
+                                        () => context
+                                            .read<ProfileAdsBloc>()
+                                            .add(LoadCurrentAds()),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color:
+                                            !isPrevious
+                                                ? AppColors.color_51AACC
+                                                : Colors.transparent,
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.symmetric(
+                                        vertical: 12,
+                                      ),
+                                      child: Text(
+                                        'current'.tr(),
+                                        style: AppTextStyles.bold.copyWith(
+                                          color:
+                                              !isPrevious
+                                                  ? AppColors.color_FFFFFF
+                                                  : AppColors.color_CCCCCC,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 16),
                           if (adsState is SuccessState<List<AdModel>>) ...[
                             Expanded(
                               child: ListView.builder(
-                                itemCount: adsState.data.length,
+                                itemCount: adsState.data?.length,
                                 itemBuilder: (_, i) {
-                                  final ad = adsState.data[i];
-                                  return Card(
-                                    margin: const EdgeInsets.symmetric(
-                                      vertical: 8,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        safeNetworkImage(
-                                          ad.imageUrl,
-                                          width: 100,
-                                          height: 80,
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(ad.title),
-                                              Text(
-                                                ad.statusText,
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  TextButton(
-                                                    onPressed: () {},
-                                                    child: Text('view_ad'.tr()),
-                                                  ),
-                                                  if (!ad.isExpired)
-                                                    ElevatedButton(
-                                                      onPressed: () {},
-                                                      child: Text(
-                                                        'delete'.tr(),
-                                                      ),
-                                                    )
-                                                  else
-                                                    OutlinedButton(
-                                                      onPressed: null,
-                                                      child: Text(
-                                                        'expired'.tr(),
-                                                      ),
-                                                    ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  );
+                                  return AdCard(ad: adsState.data?[i]);
                                 },
                               ),
                             ),

@@ -36,5 +36,6 @@
   "previous": "Previous",
   "delete": "Delete",
   "view_ad": "View Ad",
-  "expired": "Ad Expired"
+  "expired": "Ad Expired",
+  "ad_expires_in": "Ends in"
 }

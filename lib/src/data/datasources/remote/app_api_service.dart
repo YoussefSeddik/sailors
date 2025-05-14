@@ -7,11 +7,11 @@ import '../../models/auth_model.dart';
 import '../../models/params/register_params.dart';
 import '../../models/user_model.dart';
 
-part 'auth_api_service.g.dart';
+part 'app_api_service.g.dart';
 
 @RestApi(baseUrl: kBaseUrl)
-abstract class AuthApiService {
-  factory AuthApiService(Dio dio, {String baseUrl}) = _AuthApiService;
+abstract class AppApiService {
+  factory AppApiService(Dio dio, {String baseUrl}) = _AppApiService;
 
   @POST('/login')
   Future<HttpResponse<ApiResponse<AuthModel>>> login(
@@ -37,4 +37,8 @@ abstract class AuthApiService {
   Future<HttpResponse<ApiResponse<UserModel>>> updatePassword(
     @Field('password') String password,
   );
+
+  @POST('/fetchAds')
+  Future<HttpResponse<ApiResponse<UserModel>>> fetchAds(@Field('password') String password,);
+
 }

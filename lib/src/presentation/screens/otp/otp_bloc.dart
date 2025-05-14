@@ -1,23 +1,19 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:sailors/src/data/models/auth_model.dart';
-import 'package:sailors/src/domain/usecaes/cofirm_phone_usecase.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../core/resources/data_state.dart';
 import '../../../data/models/params/confirm_phone_params.dart';
-import '../../../domain/usecaes/send_otp_usecase.dart';
+import '../../../domain/usecaes/app_usecase.dart';
 import 'otp_event.dart';
 
 class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
   int secondsRemaining = 0;
   Timer? _timer;
 
-  final SendOtpUseCase _sendOtpUseCase;
+  final AppUseCases appUseCases;
 
-  final ConfirmPhoneUseCase _confirmPhoneUseCase;
-
-  OtpBloc(this._sendOtpUseCase, this._confirmPhoneUseCase)
-    : super(InitialState()) {
+  OtpBloc(this.appUseCases) : super(InitialState()) {
     on<OtpSubmitted>(_onSubmit);
     on<OtpResendRequested>(_onResend);
     on<OtpTick>(_onTick);
@@ -29,8 +25,8 @@ class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
   ) async {
     emit(LoadingState());
 
-    final result = await _confirmPhoneUseCase(
-      params: ConfirmPhoneParams(phone: event.phone, otp: event.otp),
+    final result = await appUseCases.confirmPhone(
+      ConfirmPhoneParams(phone: event.phone, otp: event.otp),
     );
 
     if (result is DataSuccess) {
@@ -45,7 +41,7 @@ class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
     Emitter<BaseState<void>> emit,
   ) async {
     emit(LoadingState());
-    final result = await _sendOtpUseCase(params: event.phone);
+    final result = await appUseCases.sendOtp(event.phone);
     if (result is DataSuccess) {
       secondsRemaining = 30;
       emit(InitialState());

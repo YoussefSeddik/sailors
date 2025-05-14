@@ -5,7 +5,7 @@ class InitialState<T> extends BaseState<T> {}
 class LoadingState<T> extends BaseState<T> {}
 
 class SuccessState<T> extends BaseState<T> {
-  final T data;
+  final T? data;
 
   SuccessState(this.data);
 }

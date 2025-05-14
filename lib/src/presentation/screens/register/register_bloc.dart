@@ -1,21 +1,21 @@
 import 'package:sailors/src/data/models/auth_model.dart';
-import 'package:sailors/src/domain/usecaes/register_usecase.dart';
 import 'package:sailors/src/presentation/screens/register/register_event.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../core/bloc/bloc_with_state.dart';
 import '../../../core/resources/data_state.dart';
 import '../../../data/models/params/register_params.dart';
+import '../../../domain/usecaes/app_usecase.dart';
 
 class RegisterBloc extends BlocWithState<RegisterEvent, BaseState<void>> {
-  final RegisterUseCase registerUseCase;
+  final AppUseCases appUseCases;
 
-  RegisterBloc(this.registerUseCase) : super(InitialState()) {
+  RegisterBloc(this.appUseCases) : super(InitialState()) {
     on<RegisterSubmitted>((event, emit) async {
       await emit.forEach(
         runBlocProcess(() async* {
           emit(LoadingState());
-          final result = await registerUseCase(
-            params: RegisterParams(
+          final result = await appUseCases.register(
+            RegisterParams(
               name: event.name,
               phone: event.phone,
               password: event.password,
