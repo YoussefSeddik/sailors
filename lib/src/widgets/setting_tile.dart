@@ -24,46 +24,46 @@ class SettingTile extends StatelessWidget {
             ? (context.locale.languageCode == 'ar' ? 'English' : 'العربية').tr()
             : '';
 
-    return InkWell(
-      onTap: () {
-        switch (item.type) {
-          case SettingItemType.editProfile:
-            // Navigate or perform action
-            break;
-          case SettingItemType.changePassword:
-            // Handle password change
-            break;
-          case SettingItemType.complaints:
-            // Open complaint form
-            break;
-          case SettingItemType.contactUs:
-            // Launch contact us
-            break;
-          case SettingItemType.aboutApp:
-            // Show about app screen
-            break;
-          case SettingItemType.changeLanguage:
-            final newLocale =
-                context.locale.languageCode == 'ar'
-                    ? const Locale('en')
-                    : const Locale('ar');
-            context.setLocale(newLocale).then((_) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+      decoration: BoxDecoration(
+        color: AppColors.color_F5F5F5,
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: InkWell(
+        onTap: () {
+          switch (item.type) {
+            case SettingItemType.editProfile:
+              // Navigate or perform action
+              break;
+            case SettingItemType.changePassword:
+              // Handle password change
+              break;
+            case SettingItemType.complaints:
+              // Open complaint form
+              break;
+            case SettingItemType.contactUs:
+              // Launch contact us
+              break;
+            case SettingItemType.aboutApp:
+              // Show about app screen
+              break;
+            case SettingItemType.changeLanguage:
+              final newLocale =
+                  context.locale.languageCode == 'ar'
+                      ? const Locale('en')
+                      : const Locale('ar');
               context.setLocale(newLocale).then((_) {
-                // Trigger reload after locale change
-                context.read<SettingsBloc>().add(LoadContent());
+                context.setLocale(newLocale).then((_) {
+                  // Trigger reload after locale change
+                  context.read<SettingsBloc>().add(LoadContent());
+                });
               });
-            });
-            break;
-        }
-      },
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 6),
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-        decoration: BoxDecoration(
-          color: AppColors.color_F5F5F5,
-          borderRadius: BorderRadius.circular(12),
-        ),
+              break;
+          }
+        },
+        borderRadius: BorderRadius.circular(12),
         child: Row(
           children: [
             if (item.iconPath != null) ...[
