@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:sailors/src/config/localization/app_language.dart';
 import 'package:sailors/src/config/themes/app_colors.dart';
 import 'package:sailors/src/config/themes/fonts/app_text_styles.dart';
 import 'package:sailors/src/core/widgets/safe_network_image.dart';
@@ -85,7 +86,10 @@ class AdCard extends StatelessWidget {
                       ),
                       if (!isExpired)
                         Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
+                          padding: EdgeInsetsDirectional.only(
+                            start: AppLanguage().isArabic ? 0.0 : 8.0,
+                            end: AppLanguage().isArabic ? 8.0 : 0.0,
+                          ),
                           child: OutlinedButton(
                             onPressed: () {},
                             style: OutlinedButton.styleFrom(
