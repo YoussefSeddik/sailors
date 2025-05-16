@@ -25,17 +25,10 @@ class SailorsAppBar extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       leading: showBackButton ? const BackButton() : null,
-      title: Text(
-        title.tr(),
-        style: AppTextStyles.bold.copyWith(
-          fontSize: 18,
-          color: theme.colorScheme.onSurface,
-        ),
-      ),
+      title: Text(title.tr(), style: AppTextStyles.bold.copyWith(fontSize: 18)),
       centerTitle: centerTitle,
       backgroundColor: theme.colorScheme.background,
       elevation: 0,
-      iconTheme: IconThemeData(color: theme.colorScheme.onSurface),
       foregroundColor: theme.colorScheme.onSurface,
       actions: trailing,
     );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_screen.dart';
+import '../../config/themes/app_theme.dart';
 import '../../core/widgets/svg_nav_icon.dart';
 import 'add_ad_screen.dart';
 import 'ads_screen.dart';
@@ -51,14 +52,11 @@ class _MainScreenState extends State<MainScreen> {
       create: (_) => ThemeProvider(),
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
-          return MaterialApp(
-            themeMode: themeProvider.themeMode,
-            theme: ThemeData.light(),
-            darkTheme: ThemeData.dark(),
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            home: Stack(
+          return Theme(
+            data: themeProvider.themeMode == ThemeMode.dark
+                ? AppTheme.darkTheme
+                : AppTheme.lightTheme,
+            child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
                 Scaffold(

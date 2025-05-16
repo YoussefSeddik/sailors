@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_ads_bloc.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_bloc.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_event.dart';
+import '../../../config/routes/app_routes.dart';
 import '../../../config/themes/app_colors.dart';
 import '../../../config/themes/fonts/app_text_styles.dart';
 import '../../../core/bloc/base_state.dart';
@@ -41,9 +42,7 @@ class ProfileScreen extends StatelessWidget {
                 height: 24,
               ),
               onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const SettingsScreen()),
-                );
+                Navigator.pushNamed(context, RoutesConstants.settingsScreen);
               },
             ),
           ],

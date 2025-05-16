@@ -42,6 +42,16 @@ class AppTheme {
       ),
     ),
     scaffoldBackgroundColor: AppColors.color_FFFFFF,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.color_FFFFFF,
+      elevation: 0,
+      iconTheme: IconThemeData(color: AppColors.color_000000),
+      titleTextStyle: TextStyle(
+        color: AppColors.color_000000,
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
   );
 
   static final darkTheme = ThemeData(
@@ -60,6 +70,16 @@ class AppTheme {
       contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
     ),
     scaffoldBackgroundColor: AppColors.color_121212,
+    appBarTheme: const AppBarTheme(
+      backgroundColor: AppColors.color_121212,
+      elevation: 0,
+      iconTheme: IconThemeData(color: AppColors.color_FFFFFF),
+      titleTextStyle: TextStyle(
+        color: AppColors.color_FFFFFF,
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
+      ),
+    ),
   );
 }
 

@@ -5,6 +5,7 @@ import '../../../core/utils/api_response.dart';
 import '../../../core/utils/constants.dart';
 import '../../models/auth_model.dart';
 import '../../models/params/register_params.dart';
+import '../../models/params/update_profile_params.dart';
 import '../../models/user_model.dart';
 
 part 'app_api_service.g.dart';
@@ -25,7 +26,9 @@ abstract class AppApiService {
   );
 
   @POST('/sendOtpCode')
-  Future<HttpResponse<ApiResponse<void>>> sendOtpCode(@Field('phone') String phone);
+  Future<HttpResponse<ApiResponse<void>>> sendOtpCode(
+    @Field('phone') String phone,
+  );
 
   @POST('/verify-otp')
   Future<HttpResponse<ApiResponse<AuthModel>>> confirmOtp(
@@ -39,6 +42,12 @@ abstract class AppApiService {
   );
 
   @POST('/fetchAds')
-  Future<HttpResponse<ApiResponse<UserModel>>> fetchAds(@Field('password') String password,);
+  Future<HttpResponse<ApiResponse<UserModel>>> fetchAds(
+    @Field('password') String password,
+  );
 
+  @POST('/updateProfile')
+  Future<HttpResponse<ApiResponse<UserModel>>> updateProfile(
+    @Body() UpdateProfileParams updateProfileParams,
+  );
 }

@@ -1,4 +1,6 @@
 import 'package:sailors/src/data/models/params/register_params.dart';
+import 'package:sailors/src/data/models/params/update_password_params.dart';
+import 'package:sailors/src/data/models/params/update_profile_params.dart';
 import '../../core/resources/data_state.dart';
 import '../../data/models/ad_model.dart';
 import '../../data/models/auth_model.dart';
@@ -14,9 +16,13 @@ abstract class AppRepository {
 
   Future<DataState<AuthModel>> confirmOtp(ConfirmPhoneParams confirmPhoneParams);
 
-  Future<DataState<void>> updatePassword(String password);
+  Future<DataState<void>> updatePassword(UpdatePasswordParams updatePasswordParams);
 
   Future<DataState<List<AdModel>>> getCurrentAds();
 
   Future<DataState<List<AdModel>>> getPreviousAds();
+
+  Future<DataState<AuthModel>> updateProfile(
+      UpdateProfileParams updateProfileParams);
+
 }

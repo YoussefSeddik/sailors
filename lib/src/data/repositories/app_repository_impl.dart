@@ -1,3 +1,6 @@
+import 'package:sailors/src/data/models/params/update_profile_params.dart';
+import 'package:sailors/src/data/models/user_model.dart';
+
 import '../../core/resources/data_state.dart';
 import '../../core/utils/constants.dart';
 import '../../core/utils/response_handler.dart';
@@ -8,6 +11,7 @@ import '../models/auth_model.dart';
 import '../models/params/confirm_phone_params.dart';
 import '../models/params/login_params.dart';
 import '../models/params/register_params.dart';
+import '../models/params/update_password_params.dart';
 
 class AppRepositoryImpl implements AppRepository {
   final AppApiService _api;
@@ -39,7 +43,7 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<DataState<void>> updatePassword(String password) async {
+  Future<DataState<void>> updatePassword(UpdatePasswordParams updatePasswordParams) async {
     await Future.delayed(
       const Duration(milliseconds: requestMockDelayInMillis),
     );
@@ -155,5 +159,15 @@ class AppRepositoryImpl implements AppRepository {
         isExpired: true,
       ),
     ]);
+  }
+
+  @override
+  Future<DataState<AuthModel>> updateProfile(UpdateProfileParams updateProfileParams) async {
+    await Future.delayed(
+      const Duration(milliseconds: requestMockDelayInMillis),
+    );
+    return DataSuccess(AuthModel(token: "dzfds",
+        user: UserModel(
+            id: "333", name: "name", phone: "phone", avatar: "cdsfs")));
   }
 }
