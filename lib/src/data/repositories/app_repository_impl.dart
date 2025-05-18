@@ -1,6 +1,3 @@
-import 'package:sailors/src/data/models/params/update_profile_params.dart';
-import 'package:sailors/src/data/models/user_model.dart';
-
 import '../../core/resources/data_state.dart';
 import '../../core/utils/constants.dart';
 import '../../core/utils/response_handler.dart';
@@ -8,10 +5,8 @@ import '../../domain/repositories/app_repository.dart';
 import '../datasources/remote/app_api_service.dart';
 import '../models/ad_model.dart';
 import '../models/auth_model.dart';
-import '../models/params/confirm_phone_params.dart';
-import '../models/params/login_params.dart';
-import '../models/params/register_params.dart';
-import '../models/params/update_password_params.dart';
+import '../models/params/send_otp_params.dart';
+import '../models/user_model.dart';
 
 class AppRepositoryImpl implements AppRepository {
   final AppApiService _api;
@@ -19,35 +14,30 @@ class AppRepositoryImpl implements AppRepository {
   AppRepositoryImpl(this._api);
 
   @override
-  Future<DataState<AuthModel>> login(LoginParams params) {
+  Future<DataState<AuthModel>> login(params) {
     return handleResponse(_api.login(params.phone, params.password));
   }
 
   @override
-  Future<DataState<AuthModel>> register(RegisterParams params) {
+  Future<DataState<AuthModel>> register(params) {
     return handleResponse(_api.register(params));
   }
 
   @override
-  Future<DataState<void>> sendOtpCode(String phone) {
-    return handleResponse(_api.sendOtpCode(phone));
+  Future<DataState<UserModel>> sendOtpCode(phone) {
+    return handleResponse(_api.sendOtpCode(SendOtpParams(phone: phone)));
   }
 
   @override
-  Future<DataState<AuthModel>> confirmOtp(
-    ConfirmPhoneParams confirmPhoneParams,
-  ) {
+  Future<DataState<AuthModel>> confirmOtp(confirmPhoneParams) {
     return handleResponse(
       _api.confirmOtp(confirmPhoneParams.phone, confirmPhoneParams.otp),
     );
   }
 
   @override
-  Future<DataState<void>> updatePassword(UpdatePasswordParams updatePasswordParams) async {
-    await Future.delayed(
-      const Duration(milliseconds: requestMockDelayInMillis),
-    );
-    return DataSuccess(null);
+  Future<DataState<void>> updatePassword(updatePasswordParams) {
+    return handleResponse(_api.updatePassword(updatePasswordParams));
   }
 
   @override
@@ -162,12 +152,19 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<DataState<AuthModel>> updateProfile(UpdateProfileParams updateProfileParams) async {
-    await Future.delayed(
-      const Duration(milliseconds: requestMockDelayInMillis),
+  Future<DataState<UserModel>> updateProfile(params) async {
+    return handleResponse(
+      _api.updateProfile(params.name, params.phone, params.avatar),
     );
-    return DataSuccess(AuthModel(token: "dzfds",
-        user: UserModel(
-            id: "333", name: "name", phone: "phone", avatar: "cdsfs")));
+  }
+
+  @override
+  Future<DataState<void>> sendSupport(params) async {
+    return handleResponse(_api.sendSupport(params));
+  }
+
+  @override
+  Future<DataState<void>> contactUs(params) async {
+    return handleResponse(_api.contactUs(params));
   }
 }

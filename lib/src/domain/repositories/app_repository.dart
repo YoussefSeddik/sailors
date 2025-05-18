@@ -6,23 +6,34 @@ import '../../data/models/ad_model.dart';
 import '../../data/models/auth_model.dart';
 import '../../data/models/params/confirm_phone_params.dart';
 import '../../data/models/params/login_params.dart';
+import '../../data/models/params/send_contact_us_params.dart';
+import '../../data/models/params/support_params.dart';
+import '../../data/models/user_model.dart';
 
 abstract class AppRepository {
   Future<DataState<AuthModel>> login(LoginParams params);
 
   Future<DataState<AuthModel>> register(RegisterParams params);
 
-  Future<DataState<void>> sendOtpCode(String phone);
+  Future<DataState<UserModel>> sendOtpCode(String phone);
 
-  Future<DataState<AuthModel>> confirmOtp(ConfirmPhoneParams confirmPhoneParams);
+  Future<DataState<AuthModel>> confirmOtp(
+    ConfirmPhoneParams confirmPhoneParams,
+  );
 
-  Future<DataState<void>> updatePassword(UpdatePasswordParams updatePasswordParams);
+  Future<DataState<void>> updatePassword(
+    UpdatePasswordParams updatePasswordParams,
+  );
 
   Future<DataState<List<AdModel>>> getCurrentAds();
 
   Future<DataState<List<AdModel>>> getPreviousAds();
 
-  Future<DataState<AuthModel>> updateProfile(
-      UpdateProfileParams updateProfileParams);
+  Future<DataState<UserModel>> updateProfile(
+    UpdateProfileParams updateProfileParams,
+  );
 
+  Future<DataState<void>> contactUs(ContactUsParams params);
+
+  Future<DataState<void>> sendSupport(SupportRequestParams params);
 }

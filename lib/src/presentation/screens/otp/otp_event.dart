@@ -7,10 +7,10 @@ class OtpSubmitted extends OtpEvent {
   OtpSubmitted(this.otp, this.phone);
 }
 
+class StartTimer extends OtpEvent {}
+
 class OtpResendRequested extends OtpEvent {
   final String phone;
 
   OtpResendRequested(this.phone);
 }
-
-class OtpTick extends OtpEvent {}

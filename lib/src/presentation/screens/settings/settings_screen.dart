@@ -4,11 +4,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:get_it/get_it.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../../config/routes/app_routes.dart';
 import '../../../config/themes/app_colors.dart';
 import '../../../config/themes/fonts/app_text_styles.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../core/widgets/sailors_app_bar.dart';
 import '../../../widgets/setting_tile.dart';
+import '../../models/otp_result_model.dart';
 import '../../models/setting_item.dart';
 import 'settings_bloc.dart';
 import 'settings_event.dart';
@@ -35,8 +37,49 @@ class SettingsScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: ListView(
                 children: [
-                  ...items.map((e) => SettingTile(item: e)),
+                  ...items.map(
+                    (item) => SettingTile(
+                      item: item,
+                      onTap: () async {
+                        switch (item.type) {
+                          case SettingItemType.editProfile:
+                            Navigator.pushNamed(
+                              context,
+                              RoutesConstants.updateProfileScreen,
+                            );
+                            break;
 
+                          case SettingItemType.changePassword:
+                            Navigator.pushNamed(
+                              context,
+                              RoutesConstants.changePasswordScreen,
+                            );
+                            break;
+
+                          case SettingItemType.complaints:
+                            // TODO: Navigate to Complaints screen
+                            break;
+
+                          case SettingItemType.contactUs:
+                            // TODO: Navigate to Contact Us screen
+                            break;
+
+                          case SettingItemType.aboutApp:
+                            // TODO: Navigate to About screen
+                            break;
+
+                          case SettingItemType.changeLanguage:
+                            final newLocale =
+                                context.locale.languageCode == 'ar'
+                                    ? const Locale('en')
+                                    : const Locale('ar');
+                            await context.setLocale(newLocale);
+                            context.read<SettingsBloc>().add(LoadContent());
+                            break;
+                        }
+                      },
+                    ),
+                  ),
                   const SizedBox(height: 16),
                   OutlinedButton(
                     onPressed: () {},
@@ -59,7 +102,7 @@ class SettingsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset('images/facebook_icon.svg', width: 22),
-                      const SizedBox(width: 10),
+                      const SizedBox(width: 6),
                       SvgPicture.asset('images/tiktok_icon.svg', width: 22),
                       const SizedBox(width: 6),
                       SvgPicture.asset('images/whatsapp_icon.svg', width: 24),

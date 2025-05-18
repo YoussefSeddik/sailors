@@ -9,39 +9,19 @@ Future<DataState<T>> handleResponse<T>(
   try {
     final response = await future;
     final api = response.data;
-
-    if (isSuccessfulStatus(response.response.statusCode) && api.data != null) {
+    if (isSuccessfulStatus(response.response.statusCode)) {
       return DataSuccess(api.data as T);
+    } else {
+      return DataFailed(_extractFirstError(response.data.errors));
     }
-
-    return _fail(
-      response.response.requestOptions,
-      response.response,
-      api.message ?? _extractFirstError(api.errors),
-    );
-  } on DioException catch (e) {
-    return _fail(e.requestOptions, e.response, _extractErrorMessage(e));
+  } on Exception catch (e) {
+    return DataFailed("_extractErrorMessageFromException(e)");
   }
 }
 
 bool isSuccessfulStatus(int? statusCode) {
   final code = statusCode ?? 0;
   return code >= 200 && code < 300;
-}
-
-DataFailed<T> _fail<T>(
-  RequestOptions request,
-  Response? response,
-  String? message,
-) {
-  return DataFailed(
-    DioException(
-      requestOptions: request,
-      response: response,
-      type: DioExceptionType.badResponse,
-      message: message ?? "Something went wrong",
-    ),
-  );
 }
 
 String? _extractFirstError(Map<String, List<String>>? errors) {
@@ -51,14 +31,64 @@ String? _extractFirstError(Map<String, List<String>>? errors) {
 String? _extractErrorMessage(DioException e) {
   try {
     final data = e.response?.data;
-    if (data is Map && data.containsKey('errors')) {
-      final errors = data['errors'] as Map<String, dynamic>;
-      final firstList = errors.values.first;
-      if (firstList is List && firstList.isNotEmpty) {
-        return firstList.first.toString();
+    if (data is Map<String, dynamic>) {
+      if (data.containsKey('msg')) {
+        return ApiErrorModel.fromJson(data).msg;
+      }
+
+      if (data.containsKey('errors')) {
+        final errors = data['errors'] as Map<String, dynamic>;
+        final firstList = errors.values.first;
+        if (firstList is List && firstList.isNotEmpty) {
+          return firstList.first.toString();
+        }
+      }
+
+      return data['message'] ?? e.message;
+    }
+  } catch (_) {
+    // fallback
+  }
+  return e.message;
+}
+
+class ApiErrorModel {
+  final bool value;
+  final String msg;
+
+  ApiErrorModel({required this.value, required this.msg});
+
+  factory ApiErrorModel.fromJson(Map<String, dynamic> json) {
+    return ApiErrorModel(
+      value: json['value'] ?? false,
+      msg: json['msg'] ?? 'Unknown error',
+    );
+  }
+}
+
+String? _extractErrorMessageFromException(DioException e) {
+  try {
+    final data = e.response?.data;
+
+    if (data is Map<String, dynamic>) {
+      if (data.containsKey('msg')) {
+        return data['msg'] as String;
+      }
+
+      if (data.containsKey('message')) {
+        return data['message'] as String;
+      }
+
+      if (data.containsKey('errors')) {
+        final errors = data['errors'] as Map<String, dynamic>;
+        final firstList = errors.values.first;
+        if (firstList is List && firstList.isNotEmpty) {
+          return firstList.first.toString();
+        }
       }
     }
-    return data['message'] ?? e.message;
+
+    return e.message;
   } catch (_) {
     return e.message;
   }

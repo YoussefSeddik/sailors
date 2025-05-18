@@ -12,10 +12,12 @@ import 'package:sailors/src/presentation/screens/profile_screen/profile_bloc.dar
 import 'package:sailors/src/presentation/screens/register/register_bloc.dart';
 import 'package:sailors/src/presentation/screens/settings/settings_bloc.dart';
 import 'package:sailors/src/presentation/screens/update_password_screen/update_password_bloc.dart';
+import 'package:sailors/src/presentation/screens/update_profile_screen/update_profile_bloc.dart';
 import 'config/localization/app_language.dart';
 import 'core/caching/local_storage_service.dart';
 import 'core/caching/local_storage_service_impl.dart';
 import 'core/utils/locale_provider.dart';
+import 'data/models/auth_model.dart';
 import 'data/repositories/app_repository_impl.dart';
 import 'domain/usecaes/app_usecase.dart';
 
@@ -33,9 +35,35 @@ Future<void> initializeDependencies() async {
     LocaleProvider(getLocale: () => AppLanguage().appLocal),
   );
 
-  // Dio client
-  injector.registerSingleton<Dio>(Dio());
-  injector.registerSingleton<AppApiService>(AppApiService(injector()));
+  final dio = Dio();
+
+  dio.interceptors.add(
+    InterceptorsWrapper(
+      onRequest: (options, handler) async {
+        final authModel = await injector<LocalStorageService>().getModelAsync<AuthModel>(
+          AuthModel.storageKey,
+          AuthModel.fromJson,
+        );
+        final token = authModel?.token;
+        if (token != null) {
+          options.headers['Authorization'] = 'Bearer $token';
+        }
+        handler.next(options);
+      },
+    ),
+  );
+
+  dio.interceptors.add(
+      LogInterceptor(
+          request: true,
+          requestBody: true,
+          responseBody: true,
+          responseHeader: true
+      )
+  );
+
+  injector.registerSingleton<Dio>(dio);
+  injector.registerSingleton<AppApiService>(AppApiService(dio));
 
   // Dependencies
   injector.registerSingleton<AppRepository>(AppRepositoryImpl(injector()));
@@ -48,8 +76,9 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<RegisterBloc>(() => RegisterBloc(injector()));
   injector.registerFactory<OtpBloc>(() => OtpBloc(injector()));
   injector.registerFactory<ForgetPasswordBloc>(() => ForgetPasswordBloc(injector()),);
-  injector.registerFactory<UpdatePasswordBloc>(() => UpdatePasswordBloc(injector()),);
+  injector.registerFactory<UpdatePasswordBloc>(() => UpdatePasswordBloc(injector(), injector()));
   injector.registerFactory<ProfileBloc>(() => ProfileBloc());
   injector.registerFactory<ProfileAdsBloc>(() => ProfileAdsBloc(injector()));
   injector.registerFactory<SettingsBloc>(() => SettingsBloc(injector(), injector()));
+  injector.registerFactory<UpdateProfileScreenBloc>(() => UpdateProfileScreenBloc(injector(), injector()));
 }

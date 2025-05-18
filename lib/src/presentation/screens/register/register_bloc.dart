@@ -24,7 +24,7 @@ class RegisterBloc extends BlocWithState<RegisterEvent, BaseState<void>> {
           if (result is DataSuccess) {
             yield SuccessState<AuthModel?>(result.data);
           } else {
-            yield FailureState(result.error?.message ?? 'Unknown error');
+            yield FailureState(result.message ?? 'Unknown error');
           }
         }),
         onData: (s) => s,

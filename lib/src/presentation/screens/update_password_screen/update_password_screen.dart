@@ -14,6 +14,7 @@ import '../../../widgets/loading_overlay.dart';
 class UpdatePasswordScreen extends StatelessWidget {
   const UpdatePasswordScreen({super.key});
 
+
   @override
   Widget build(BuildContext context) {
     final passwordController = TextEditingController();
@@ -102,40 +103,4 @@ class UpdatePasswordScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class UpdatePasswordScreenPreview extends StatelessWidget {
-  const UpdatePasswordScreenPreview({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(home: UpdatePasswordScreen());
-  }
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
-  await initializeDependencies();
-
-  runApp(
-    EasyLocalization(
-      supportedLocales: const [Locale('en'), Locale('ar')],
-      path: 'i18n',
-      fallbackLocale: const Locale('en'),
-      child: Builder(
-        builder:
-            (context) => MaterialApp(
-              debugShowCheckedModeBanner: false,
-              theme: AppTheme.lightTheme,
-              darkTheme: AppTheme.darkTheme,
-              themeMode: ThemeMode.light,
-              locale: context.locale,
-              supportedLocales: context.supportedLocales,
-              localizationsDelegates: context.localizationDelegates,
-              home: const UpdatePasswordScreen(),
-            ),
-      ),
-    ),
-  );
 }

@@ -88,18 +88,17 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(height: 10),
                           BlocConsumer<LoginBloc, BaseState<void>>(
                             listener: (context, state) {
-                              if (state is SuccessState) {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  RoutesConstants.mainScreen,
-                                  (route) => false,
-                                );
-                              } else if (state case FailureState(
-                                :final message,
-                              )) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(content: Text(message)),
-                                );
+                              switch (state) {
+                                case SuccessState():
+                                  Navigator.pushNamedAndRemoveUntil(
+                                    context,
+                                    RoutesConstants.mainScreen,
+                                    (route) => false,
+                                  );
+                                case FailureState():
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(state.message)),
+                                  );
                               }
                             },
                             builder: (context, state) {

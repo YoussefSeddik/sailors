@@ -19,7 +19,7 @@ class LoginBloc extends BlocWithState<LoginEvent, BaseState<void>> {
           if (result is DataSuccess) {
             yield SuccessState(null);
           } else {
-            yield FailureState(result.error?.message ?? 'Unknown error');
+            yield FailureState(result.message ?? 'Unknown error');
           }
         }),
         onData: (s) => s,

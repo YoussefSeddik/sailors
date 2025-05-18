@@ -1,10 +1,12 @@
+import 'dart:io';
+
 class UpdateProfileParams {
-  final String image;
+  final File? avatar;
   final String name;
   final String phone;
 
   const UpdateProfileParams({
-    required this.image,
+    required this.avatar,
     required this.name,
     required this.phone,
   });

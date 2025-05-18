@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:sailors/src/presentation/screens/forget_password/forget_password_event.dart';
 import '../../../config/routes/app_routes.dart';
 import '../../../core/bloc/base_state.dart';
+import '../../../data/models/user_model.dart';
 import '../../../injector.dart';
 import '../../../widgets/loading_overlay.dart';
 import '../../models/otp_result_model.dart';
@@ -22,7 +23,7 @@ class ForgetPasswordScreen extends StatelessWidget {
       create: (_) => injector<ForgetPasswordBloc>(),
       child: Scaffold(
         body: SafeArea(
-          child: BlocBuilder<ForgetPasswordBloc, BaseState<void>>(
+          child: BlocBuilder<ForgetPasswordBloc, BaseState<UserModel>>(
             builder: (context, state) {
               final isLoading = state is LoadingState;
 
@@ -57,20 +58,25 @@ class ForgetPasswordScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 12),
-                          BlocConsumer<ForgetPasswordBloc, BaseState<void>>(
+                          BlocConsumer<
+                            ForgetPasswordBloc,
+                            BaseState<UserModel>
+                          >(
                             listener: (context, state) async {
-                              if (state is SuccessState) {
+                              if (state is SuccessState<UserModel>) {
                                 final result =
                                     await Navigator.pushNamed<OtpResult>(
-                                  context,
-                                  RoutesConstants.otpScreen,
-                                );
+                                      context,
+                                      RoutesConstants.otpScreen,
+                                      arguments: state.data?.phone,
+                                    );
 
                                 if (result != null && result.verified) {
                                   Navigator.pushNamedAndRemoveUntil(
                                     context,
                                     RoutesConstants.changePasswordScreen,
-                                        (route) => false,
+                                    arguments: state.data?.phone,
+                                    (route) => false,
                                   );
                                 }
                               } else if (state case FailureState(

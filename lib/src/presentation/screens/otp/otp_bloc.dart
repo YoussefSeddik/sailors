@@ -14,9 +14,9 @@ class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
   final AppUseCases appUseCases;
 
   OtpBloc(this.appUseCases) : super(InitialState()) {
+    on<StartTimer>(_startTimer);
     on<OtpSubmitted>(_onSubmit);
     on<OtpResendRequested>(_onResend);
-    on<OtpTick>(_onTick);
   }
 
   Future<void> _onSubmit(
@@ -32,39 +32,30 @@ class OtpBloc extends Bloc<OtpEvent, BaseState<void>> {
     if (result is DataSuccess) {
       emit(SuccessState<AuthModel?>(result.data));
     } else {
-      emit(FailureState(result.error?.message ?? "OTP verification failed"));
+      emit(FailureState(result.message ?? "OTP verification failed"));
     }
   }
 
-  Future<void> _onResend(
-    OtpResendRequested event,
-    Emitter<BaseState<void>> emit,
-  ) async {
+  Future<void> _onResend(OtpResendRequested event, Emitter<BaseState<void>> emit) async {
     emit(LoadingState());
     final result = await appUseCases.sendOtp(event.phone);
     if (result is DataSuccess) {
-      secondsRemaining = 30;
       emit(InitialState());
-      _startTimer();
+      add(StartTimer());
     } else {
-      emit(FailureState(result.error?.message ?? "Failed to resend OTP"));
+      emit(FailureState(result.message ?? "Failed to resend OTP"));
     }
   }
 
-  void _onTick(OtpTick event, Emitter<BaseState<void>> emit) {
-    emit(TickState(secondsRemaining));
-  }
 
-  void _startTimer() {
+  Future<void> _startTimer(StartTimer event, Emitter<BaseState<void>> emit) async {
     _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      if (secondsRemaining == 0) {
-        timer.cancel();
-      } else {
-        secondsRemaining--;
-        add(OtpTick());
-      }
-    });
+    for (secondsRemaining = 30; secondsRemaining > 0; secondsRemaining--) {
+      emit(TickState(secondsRemaining));
+      await Future.delayed(const Duration(seconds: 1));
+      if (emit.isDone) return;
+    }
+    emit(InitialState());
   }
 
   @override

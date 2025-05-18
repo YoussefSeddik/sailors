@@ -19,7 +19,8 @@
   "verified_successfully": "Verified successfully",
   "confirm": "Confirm",
   "send_again": "Send again",
-  "send_again_in_seconds": "Send again in {} seconds",
+  "send_again_in_seconds": "Send again in ",
+  "remaining_seconds" : "{} seconds",
   "account_created_successfully": "Account created\nsuccessfully",
   "browse_now": "Browse now",
   "forgot_password_without?": "Forgot password",
@@ -47,5 +48,7 @@
   "about_app": "About the App",
   "change_language": "Change App Language",
   "delete_account": "Delete Account",
-  "logout": "Log Out"
+  "logout": "Log Out",
+  "save_changes": "Save Changes",
+  "change_photo": "upload"
 }

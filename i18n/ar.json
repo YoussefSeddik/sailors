@@ -19,7 +19,8 @@
   "verified_successfully": "تم التحقق بنجاح",
   "confirm": "تأكيد",
   "send_again": "إعادة الإرسال",
-  "send_again_in_seconds": "أعد الإرسال خلال {} ثانية",
+  "send_again_in_seconds": "أعد الإرسال خلال ",
+  "remaining_seconds" : "{} ثانية",
   "account_created_successfully": "تم انشاء الحساب\nبنجاح",
   "browse_now": "تصفح الان",
   "forgot_password_without?": "نسيت كلمة السر",
@@ -47,5 +48,7 @@
   "about_app": "عن التطبيق",
   "change_language": "تغيير لغة التطبيق",
   "delete_account": "حذف الحساب",
-  "logout": "تسجيل الخروج"
+  "logout": "تسجيل الخروج",
+  "save_changes": "حفظ التغييرات",
+  "change_photo": "تغيير"
 }

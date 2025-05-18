@@ -2,63 +2,57 @@ import 'package:sailors/src/core/caching/local_storage_service.dart';
 import 'package:sailors/src/core/resources/data_state.dart';
 import 'package:sailors/src/data/models/ad_model.dart';
 import 'package:sailors/src/data/models/auth_model.dart';
-import 'package:sailors/src/data/models/params/confirm_phone_params.dart';
-import 'package:sailors/src/data/models/params/login_params.dart';
-import 'package:sailors/src/data/models/params/register_params.dart';
-import 'package:sailors/src/data/models/params/update_password_params.dart';
-import 'package:sailors/src/data/models/params/update_profile_params.dart';
 import 'package:sailors/src/domain/repositories/app_repository.dart';
 
-class AppUseCases extends AppRepository {
+import '../../data/models/user_model.dart';
+
+class AppUseCases {
   final AppRepository _repo;
   final LocalStorageService _storage;
 
   AppUseCases(this._repo, this._storage);
-  @override
-  Future<DataState<AuthModel>> login(LoginParams params) async {
+
+  Future<DataState<AuthModel>> login(params) async {
     final result = await _repo.login(params);
     if (result.data != null) {
       await _storage.saveModel<AuthModel>(
         AuthModel.storageKey,
         result.data!,
-            (m) => m.toJson(),
+        (m) => m.toJson(),
       );
     }
     return result;
   }
-  @override
-  Future<DataState<AuthModel>> register(RegisterParams params) async {
+
+  Future<DataState<AuthModel>> register(params) async {
     final result = await _repo.register(params);
     if (result.data != null) {
       await _storage.saveModel<AuthModel>(
         AuthModel.storageKey,
         result.data!,
-            (m) => m.toJson(),
+        (m) => m.toJson(),
       );
     }
     return result;
   }
 
-  @override
-  Future<DataState<void>> sendOtp(String phoneNumber) {
+  Future<DataState<UserModel>> sendOtp(phoneNumber) {
     return _repo.sendOtpCode(phoneNumber);
   }
 
-  @override
-  Future<DataState<AuthModel>> confirmPhone(ConfirmPhoneParams params) async {
+  Future<DataState<AuthModel>> confirmPhone(params) async {
     final result = await _repo.confirmOtp(params);
     if (result.data != null) {
       await _storage.saveModel<AuthModel>(
         AuthModel.storageKey,
         result.data!,
-            (m) => m.toJson(),
+        (m) => m.toJson(),
       );
     }
     return result;
   }
 
-  @override
-  Future<DataState<void>> updatePassword(UpdatePasswordParams params) {
+  Future<DataState<void>> updatePassword(params) {
     return _repo.updatePassword(params);
   }
 
@@ -66,23 +60,44 @@ class AppUseCases extends AppRepository {
     return _repo.getCurrentAds();
   }
 
-  @override
   Future<DataState<List<AdModel>>> getPreviousAds() {
     return _repo.getPreviousAds();
   }
 
-  @override
-  Future<DataState<AuthModel>> confirmOtp(ConfirmPhoneParams confirmPhoneParams) {
+  Future<DataState<AuthModel>> confirmOtp(confirmPhoneParams) {
     return _repo.confirmOtp(confirmPhoneParams);
   }
 
-  @override
-  Future<DataState<void>> sendOtpCode(String phone) {
+  Future<DataState<void>> sendOtpCode(phone) {
     return _repo.sendOtpCode(phone);
   }
 
-  @override
-  Future<DataState<AuthModel>> updateProfile(UpdateProfileParams updateProfileParams) {
-    return _repo.updateProfile(updateProfileParams);
+  Future<DataState<UserModel>> updateProfile(params) async {
+    final result = await _repo.updateProfile(params);
+
+    if (result.data != null) {
+      final authModel = await _storage.getModelAsync<AuthModel>(
+        AuthModel.storageKey,
+        AuthModel.fromJson,
+      );
+      if (authModel != null) {
+        authModel.user = result.data!;
+        await _storage.saveModel<AuthModel>(
+          AuthModel.storageKey,
+          authModel,
+          (m) => m.toJson(),
+        );
+      }
+    }
+
+    return result;
+  }
+
+  Future<DataState<void>> contactUs(params) {
+    return _repo.contactUs(params);
+  }
+
+  Future<DataState<void>> sendSupport(params) {
+    return _repo.sendSupport(params);
   }
 }

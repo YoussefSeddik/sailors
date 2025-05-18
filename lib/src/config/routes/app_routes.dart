@@ -14,6 +14,7 @@ import '../../presentation/screens/profile_screen/profile_screen.dart';
 import '../../presentation/screens/register/register_screen.dart';
 import '../../presentation/screens/successful_state_screen.dart';
 import '../../presentation/screens/update_password_screen/update_password_screen.dart';
+import '../../presentation/screens/update_profile_screen/update_profile_screen.dart';
 import '../../presentation/screens/welcome_screen/welcome_screen.dart';
 
 mixin AppRoutes {
@@ -63,6 +64,9 @@ mixin AppRoutes {
       case RoutesConstants.settingsScreen:
         return _materialRoute(const SettingsScreen());
 
+      case RoutesConstants.updateProfileScreen:
+        return _materialRoute(UpdateProfileScreen());
+
       default:
         return _materialRoute(
           const Scaffold(body: Center(child: Text("Route not found"))),
@@ -92,4 +96,6 @@ class RoutesConstants {
   static const forgetPasswordScreen = "/ForgetPasswordScreen";
   static const changePasswordScreen = "/ChangePasswordScreen";
   static const settingsScreen = "/SettingsScreen";
+  static const updateProfileScreen = "/UpdateProfileScreen";
+
 }
