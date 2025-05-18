@@ -4,20 +4,28 @@ import '../resources/data_state.dart';
 import 'api_response.dart';
 
 Future<DataState<T>> handleResponse<T>(
-  Future<HttpResponse<ApiResponse<T>>> future,
-) async {
+    Future<HttpResponse<ApiResponse<T>>> future,
+    ) async {
   try {
     final response = await future;
     final api = response.data;
-    if (isSuccessfulStatus(response.response.statusCode)) {
+
+    if (isSuccessfulStatus(response.response.statusCode) && api.success) {
       return DataSuccess(api.data as T);
-    } else {
-      return DataFailed(_extractFirstError(response.data.errors));
     }
-  } on Exception catch (e) {
-    return DataFailed("_extractErrorMessageFromException(e)");
+
+    if (!api.success) {
+      return DataFailed(api.message ?? 'Unknown error');
+    }
+
+    return DataFailed(_extractFirstError(api.errors));
+  } on DioException catch (e) {
+    return DataFailed(_extractErrorMessage(e));
+  } catch (e) {
+    return DataFailed('Unexpected error occurred');
   }
 }
+
 
 bool isSuccessfulStatus(int? statusCode) {
   final code = statusCode ?? 0;

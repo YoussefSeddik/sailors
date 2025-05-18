@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sailors/src/data/datasources/remote/app_api_service.dart';
 import 'package:sailors/src/domain/repositories/app_repository.dart';
+import 'package:sailors/src/presentation/screens/contact_us_and_support/support_bloc.dart';
 import 'package:sailors/src/presentation/screens/forget_password/forget_password_bloc.dart';
 import 'package:sailors/src/presentation/screens/login/login_bloc.dart';
 import 'package:sailors/src/presentation/screens/otp/otp_bloc.dart';
@@ -81,4 +82,6 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<ProfileAdsBloc>(() => ProfileAdsBloc(injector()));
   injector.registerFactory<SettingsBloc>(() => SettingsBloc(injector(), injector()));
   injector.registerFactory<UpdateProfileScreenBloc>(() => UpdateProfileScreenBloc(injector(), injector()));
+  injector.registerFactory<SupportBloc>(() => SupportBloc(injector()));
+
 }

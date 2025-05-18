@@ -105,7 +105,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 Navigator.pop(context);
                               },
                               child: Text(
-                                'login'.tr(),
+                                'log_in'.tr(),
                                 style: TextStyle(
                                   color: primaryColor,
                                   decoration: TextDecoration.none,

@@ -8,17 +8,7 @@ import '../../../injector.dart';
 import '../../models/otp_result_model.dart';
 import 'otp_bloc.dart';
 import 'otp_event.dart';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
-import 'package:sailors/src/config/themes/app_colors.dart';
-import 'package:sailors/src/widgets/loading_overlay.dart';
-import '../../../core/bloc/base_state.dart';
-import '../../../injector.dart';
-import '../../models/otp_result_model.dart';
-import 'otp_bloc.dart';
-import 'otp_event.dart';
+import 'dart:ui' as ui show TextDirection;
 
 class OtpScreen extends StatelessWidget {
   final String phone;
@@ -90,36 +80,41 @@ class _OtpViewState extends State<_OtpView> {
                       ),
                     ),
                     const SizedBox(height: 40),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: List.generate(4, (index) {
-                        return SizedBox(
-                          width: 65,
-                          child: TextField(
-                            controller: _controllers[index],
-                            focusNode: _focusNodes[index],
-                            keyboardType: TextInputType.number,
-                            textAlign: TextAlign.center,
-                            maxLength: 1,
-                            decoration: const InputDecoration(counterText: ''),
-                            onChanged: (value) {
-                              if (value.isNotEmpty) {
-                                if (index < 3) {
+                    Directionality(
+                      textDirection: ui.TextDirection.ltr,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: List.generate(4, (index) {
+                          return SizedBox(
+                            width: 65,
+                            child: TextField(
+                              controller: _controllers[index],
+                              focusNode: _focusNodes[index],
+                              keyboardType: TextInputType.number,
+                              textAlign: TextAlign.center,
+                              maxLength: 1,
+                              decoration: const InputDecoration(
+                                counterText: '',
+                              ),
+                              onChanged: (value) {
+                                if (value.isNotEmpty) {
+                                  if (index < 3) {
+                                    FocusScope.of(
+                                      context,
+                                    ).requestFocus(_focusNodes[index + 1]);
+                                  } else {
+                                    FocusScope.of(context).unfocus();
+                                  }
+                                } else if (index > 0) {
                                   FocusScope.of(
                                     context,
-                                  ).requestFocus(_focusNodes[index + 1]);
-                                } else {
-                                  FocusScope.of(context).unfocus();
+                                  ).requestFocus(_focusNodes[index - 1]);
                                 }
-                              } else if (index > 0) {
-                                FocusScope.of(
-                                  context,
-                                ).requestFocus(_focusNodes[index - 1]);
-                              }
-                            },
-                          ),
-                        );
-                      }),
+                              },
+                            ),
+                          );
+                        }),
+                      ),
                     ),
                     const SizedBox(height: 16),
                     BlocConsumer<OtpBloc, BaseState<void>>(
@@ -167,8 +162,12 @@ class _OtpViewState extends State<_OtpView> {
 
                         return TextButton(
                           onPressed:
-                              enabled ? () => bloc.add(OtpResendRequested(widget.phone)) : null,
-                          child: enabled
+                              enabled
+                                  ? () =>
+                                      bloc.add(OtpResendRequested(widget.phone))
+                                  : null,
+                          child:
+                              enabled
                                   ? Text(
                                     'send_again'.tr(),
                                     style: TextStyle(
@@ -180,7 +179,7 @@ class _OtpViewState extends State<_OtpView> {
                                     TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: 'Send again in '.tr(),
+                                          text: 'send_again_in_seconds'.tr(),
                                           style: TextStyle(
                                             color: AppColors.color_grey_dark,
                                           ),

@@ -10,7 +10,6 @@ import '../../../config/themes/fonts/app_text_styles.dart';
 import '../../../core/bloc/base_state.dart';
 import '../../../core/widgets/sailors_app_bar.dart';
 import '../../../widgets/setting_tile.dart';
-import '../../models/otp_result_model.dart';
 import '../../models/setting_item.dart';
 import 'settings_bloc.dart';
 import 'settings_event.dart';
@@ -57,15 +56,24 @@ class SettingsScreen extends StatelessWidget {
                             break;
 
                           case SettingItemType.complaints:
-                            // TODO: Navigate to Complaints screen
+                            Navigator.pushNamed(
+                              context,
+                              RoutesConstants.supportRequestScreen,
+                            );
                             break;
 
                           case SettingItemType.contactUs:
-                            // TODO: Navigate to Contact Us screen
+                            Navigator.pushNamed(
+                              context,
+                              RoutesConstants.contactUsScreen,
+                            );
                             break;
 
                           case SettingItemType.aboutApp:
-                            // TODO: Navigate to About screen
+                            Navigator.pushNamed(
+                              context,
+                              RoutesConstants.aboutAppScreen,
+                            );
                             break;
 
                           case SettingItemType.changeLanguage:

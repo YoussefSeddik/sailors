@@ -50,5 +50,15 @@
   "delete_account": "حذف الحساب",
   "logout": "تسجيل الخروج",
   "save_changes": "حفظ التغييرات",
-  "change_photo": "تغيير"
+  "change_photo": "تغيير",
+  "support_or_suggestions": "الشكاوى و الاقتراحات",
+  "title_hint": "عنوان الشكوى او الاقتراح !",
+  "email": "البريد الالكتروني",
+  "phone": "رقم الهاتف",
+  "how_can_we_help": "ماذا يمكننا المساعدة ؟ ...",
+  "send": "ارسال",
+  "or_contact_us_through": "او تواصل معنا عبر",
+  "email_label": "البريد: info@gmail.com",
+  "phone_label": "رقم الهاتف: 456589987",
+  "Success" : "تم بنجاح"
 }

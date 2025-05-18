@@ -20,7 +20,7 @@
   "confirm": "Confirm",
   "send_again": "Send again",
   "send_again_in_seconds": "Send again in ",
-  "remaining_seconds" : "{} seconds",
+  "remaining_seconds": "{} seconds",
   "account_created_successfully": "Account created\nsuccessfully",
   "browse_now": "Browse now",
   "forgot_password_without?": "Forgot password",
@@ -50,5 +50,15 @@
   "delete_account": "Delete Account",
   "logout": "Log Out",
   "save_changes": "Save Changes",
-  "change_photo": "upload"
+  "change_photo": "upload",
+  "support_or_suggestions": "Complaints or Suggestions",
+  "title_hint": "Complaint or suggestion title!",
+  "email": "Email",
+  "phone": "Phone Number",
+  "how_can_we_help": "How can we help you? ...",
+  "send": "Send",
+  "or_contact_us_through": "Or contact us through",
+  "email_label": "Email: info@gmail.com",
+  "phone_label": "Phone Number: 456589987",
+  "Success" : "Succeeded"
 }

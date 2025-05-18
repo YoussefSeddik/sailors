@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sailors/src/presentation/screens/about_app_screen.dart';
+import 'package:sailors/src/presentation/screens/contact_us_and_support/contact_us_screen.dart';
+import 'package:sailors/src/presentation/screens/contact_us_and_support/support_request_screen.dart';
 import 'package:sailors/src/presentation/screens/otp/otp_screen.dart';
 import 'package:sailors/src/presentation/screens/settings/settings_screen.dart';
 
@@ -67,6 +70,15 @@ mixin AppRoutes {
       case RoutesConstants.updateProfileScreen:
         return _materialRoute(UpdateProfileScreen());
 
+      case RoutesConstants.contactUsScreen:
+        return _materialRoute(ContactUsScreen());
+
+      case RoutesConstants.supportRequestScreen:
+        return _materialRoute(SupportRequestScreen());
+
+      case RoutesConstants.aboutAppScreen:
+        return _materialRoute(AboutAppScreen());
+
       default:
         return _materialRoute(
           const Scaffold(body: Center(child: Text("Route not found"))),
@@ -97,5 +109,7 @@ class RoutesConstants {
   static const changePasswordScreen = "/ChangePasswordScreen";
   static const settingsScreen = "/SettingsScreen";
   static const updateProfileScreen = "/UpdateProfileScreen";
-
+  static const contactUsScreen = "/ContactUsScreen";
+  static const supportRequestScreen = "/SupportRequestScreen";
+  static const aboutAppScreen = "/AboutAppScreen";
 }
