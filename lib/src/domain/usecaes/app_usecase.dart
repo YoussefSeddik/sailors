@@ -2,8 +2,11 @@ import 'package:sailors/src/core/caching/local_storage_service.dart';
 import 'package:sailors/src/core/resources/data_state.dart';
 import 'package:sailors/src/data/models/ad_model.dart';
 import 'package:sailors/src/data/models/auth_model.dart';
+import 'package:sailors/src/data/models/category_model.dart';
+import 'package:sailors/src/data/models/package_model.dart';
 import 'package:sailors/src/domain/repositories/app_repository.dart';
 
+import '../../data/models/advertise_model.dart';
 import '../../data/models/user_model.dart';
 
 class AppUseCases {
@@ -99,5 +102,16 @@ class AppUseCases {
 
   Future<DataState<void>> sendSupport(params) {
     return _repo.sendSupport(params);
+  }
+
+  Future<DataState<AdvertiseModel>> createAdvertisement(params) {
+    return _repo.createAdvertisement(params);
+  }
+  Future<DataState<List<PackageModel>>> getAllPackages() {
+    return _repo.getAllPackages();
+  }
+
+  Future<DataState<List<CategoryModel>>> getAllCategories() {
+    return _repo.getAllCategories();
   }
 }

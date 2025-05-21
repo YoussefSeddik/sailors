@@ -60,5 +60,20 @@
   "or_contact_us_through": "او تواصل معنا عبر",
   "email_label": "البريد: info@gmail.com",
   "phone_label": "رقم الهاتف: 456589987",
-  "Success" : "تم بنجاح"
+  "success" : "تم بنجاح",
+  "create_ad": "إنشاء إعلان",
+  "ad_type": "نوع الإعلان",
+  "normal": "عادي",
+  "premium": "مميز",
+  "duration": "المدة",
+  "category": "الفئة",
+  "status": "الحالة",
+  "new": "جديد",
+  "used": "مستعمل",
+  "description": "الوصف",
+  "upload_images": "تحميل الصور",
+  "price": "السعر",
+  "next": "التالي",
+  "required": "هذا الحقل مطلوب"
+
 }

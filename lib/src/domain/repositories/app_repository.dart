@@ -1,3 +1,7 @@
+import 'package:sailors/src/data/models/advertise_model.dart';
+import 'package:sailors/src/data/models/category_model.dart';
+import 'package:sailors/src/data/models/package_model.dart';
+import 'package:sailors/src/data/models/params/create_advertise_params.dart';
 import 'package:sailors/src/data/models/params/register_params.dart';
 import 'package:sailors/src/data/models/params/update_password_params.dart';
 import 'package:sailors/src/data/models/params/update_profile_params.dart';
@@ -36,4 +40,11 @@ abstract class AppRepository {
   Future<DataState<void>> contactUs(ContactUsParams params);
 
   Future<DataState<void>> sendSupport(SupportRequestParams params);
+
+  Future<DataState<AdvertiseModel>> createAdvertisement(CreateAdvertiseParams params);
+
+  Future<DataState<List<PackageModel>>> getAllPackages();
+
+  Future<DataState<List<CategoryModel>>> getAllCategories();
+
 }

@@ -73,31 +73,3 @@ class ApiErrorModel {
     );
   }
 }
-
-String? _extractErrorMessageFromException(DioException e) {
-  try {
-    final data = e.response?.data;
-
-    if (data is Map<String, dynamic>) {
-      if (data.containsKey('msg')) {
-        return data['msg'] as String;
-      }
-
-      if (data.containsKey('message')) {
-        return data['message'] as String;
-      }
-
-      if (data.containsKey('errors')) {
-        final errors = data['errors'] as Map<String, dynamic>;
-        final firstList = errors.values.first;
-        if (firstList is List && firstList.isNotEmpty) {
-          return firstList.first.toString();
-        }
-      }
-    }
-
-    return e.message;
-  } catch (_) {
-    return e.message;
-  }
-}

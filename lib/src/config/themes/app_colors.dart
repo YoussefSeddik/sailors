@@ -5,7 +5,7 @@ class AppColors {
   static const Color color_00A9C8 = Color(0xFF00A9C8); // lightPrimary
   static const Color color_FFFFFF = Color(0xFFFFFFFF); // white / onPrimary
   static const Color color_006D77 = Color(0xFF006D77); // lightSecondary
-  static const Color color_CCCCCC = Color(0xFFCCCCCC); // onBackground/onSurface
+  static const Color color_CCCCCC = Color(0xFF9F9F9F); // onBackground/onSurface
   static const Color color_000000 = Color(0xFF000000); // text
   static const Color color_51AACC = Color(0xFF51AACC); // accent / button color
 

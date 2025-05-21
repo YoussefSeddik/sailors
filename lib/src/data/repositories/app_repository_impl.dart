@@ -1,3 +1,9 @@
+import 'package:sailors/src/data/models/advertise_model.dart';
+import 'package:sailors/src/data/models/category_model.dart';
+import 'package:sailors/src/data/models/package_model.dart';
+
+import 'package:sailors/src/data/models/params/create_advertise_params.dart';
+
 import '../../core/resources/data_state.dart';
 import '../../core/utils/constants.dart';
 import '../../core/utils/response_handler.dart';
@@ -167,4 +173,37 @@ class AppRepositoryImpl implements AppRepository {
   Future<DataState<void>> contactUs(params) async {
     return handleResponse(_api.contactUs(params));
   }
+
+  @override
+  Future<DataState<AdvertiseModel>> createAdvertisement(
+      CreateAdvertiseParams params,
+      ) {
+    return handleResponse(
+      _api.createAdvertisement(
+        params.name,
+        params.details,
+        params.categoryId,
+        params.packageId,
+        params.advertisementTypeId,
+        params.type,
+        params.status,
+        params.phone,
+        params.whatsapp,
+        params.adPrice,
+        params.coupon,
+        params.images,
+      ),
+    );
+  }
+
+  @override
+  Future<DataState<List<PackageModel>>> getAllPackages() {
+    return handleResponse(_api.getAllPackages());
+  }
+
+  @override
+  Future<DataState<List<CategoryModel>>> getAllCategories() {
+    return handleResponse(_api.getAllCategories());
+  }
+
 }

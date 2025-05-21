@@ -60,5 +60,19 @@
   "or_contact_us_through": "Or contact us through",
   "email_label": "Email: info@gmail.com",
   "phone_label": "Phone Number: 456589987",
-  "Success" : "Succeeded"
+  "success" : "Succeeded",
+  "create_ad": "Create Advertisement",
+  "ad_type": "Advertisement Type",
+  "normal": "Normal",
+  "premium": "Premium",
+  "duration": "Duration",
+  "category": "Category",
+  "status": "Status",
+  "new": "New",
+  "used": "Used",
+  "description": "Description",
+  "upload_images": "Upload Images",
+  "price": "Price",
+  "next": "Next",
+  "required": "This field is required"
 }

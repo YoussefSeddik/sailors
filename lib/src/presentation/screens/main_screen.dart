@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:sailors/src/config/routes/app_routes.dart';
+import 'package:sailors/src/presentation/screens/create_advertise_screen/create_advertise_screen.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_screen.dart';
 import '../../config/themes/app_theme.dart';
+import '../../core/bloc/base_state.dart';
 import '../../core/widgets/svg_nav_icon.dart';
+import '../../injector.dart';
 import 'add_ad_screen.dart';
 import 'ads_screen.dart';
+import 'create_advertise_screen/create_advertise_bloc.dart';
+import 'create_advertise_screen/create_advertise_event.dart';
 import 'home_screen.dart';
 import 'notifications_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -32,12 +39,12 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
-  final List<Widget> _screens = const [
-    HomeScreen(),
-    AdsScreen(),
-    AddAdScreen(),
-    NotificationScreen(),
-    ProfileScreen(),
+  final List<Widget> _screens = [
+    const HomeScreen(),
+    const AdsScreen(),
+    SizedBox(),
+    const NotificationScreen(),
+    const ProfileScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -53,9 +60,10 @@ class _MainScreenState extends State<MainScreen> {
       child: Consumer<ThemeProvider>(
         builder: (context, themeProvider, child) {
           return Theme(
-            data: themeProvider.themeMode == ThemeMode.dark
-                ? AppTheme.darkTheme
-                : AppTheme.lightTheme,
+            data:
+                themeProvider.themeMode == ThemeMode.dark
+                    ? AppTheme.darkTheme
+                    : AppTheme.lightTheme,
             child: Stack(
               alignment: Alignment.bottomCenter,
               children: [
@@ -65,7 +73,9 @@ class _MainScreenState extends State<MainScreen> {
                     currentIndex: _selectedIndex,
                     onTap: (index) {
                       setState(() {
-                        if (index == 2) return;
+                        if (index == 2) {
+                          return;
+                        }
                         _selectedIndex = index;
                       });
                     },
@@ -117,9 +127,15 @@ class _MainScreenState extends State<MainScreen> {
                   bottom: 30,
                   child: GestureDetector(
                     onTap: () {
-                      setState(() {
-                        _selectedIndex = 2;
-                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => BlocProvider(
+                            create: (_) => injector<CreateAdvertiseBloc>()..add(FetchScreenData()),
+                            child: const CreateAdvertiseScreen(),
+                          ),
+                        ),
+                      );
                     },
                     child: SizedBox(
                       width: 56,

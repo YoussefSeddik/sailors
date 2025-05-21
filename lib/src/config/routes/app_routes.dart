@@ -8,6 +8,7 @@ import 'package:sailors/src/presentation/screens/settings/settings_screen.dart';
 import '../../presentation/models/otp_result_model.dart';
 import '../../presentation/screens/add_ad_screen.dart';
 import '../../presentation/screens/ads_screen.dart';
+import '../../presentation/screens/create_advertise_screen/create_advertise_screen.dart';
 import '../../presentation/screens/forget_password/forget_password_screen.dart';
 import '../../presentation/screens/home_screen.dart';
 import '../../presentation/screens/login/login_screen.dart';
@@ -79,6 +80,9 @@ mixin AppRoutes {
       case RoutesConstants.aboutAppScreen:
         return _materialRoute(AboutAppScreen());
 
+      case RoutesConstants.createAdvertiseScreen:
+        return _materialRoute(CreateAdvertiseScreen());
+
       default:
         return _materialRoute(
           const Scaffold(body: Center(child: Text("Route not found"))),
@@ -87,6 +91,9 @@ mixin AppRoutes {
   }
 
   static Route<T> _materialRoute<T>(Widget view) {
+    return MaterialPageRoute<T>(builder: (_) => view);
+  }
+  static Route<T> materialRoute<T>(Widget view) {
     return MaterialPageRoute<T>(builder: (_) => view);
   }
 }
@@ -112,4 +119,6 @@ class RoutesConstants {
   static const contactUsScreen = "/ContactUsScreen";
   static const supportRequestScreen = "/SupportRequestScreen";
   static const aboutAppScreen = "/AboutAppScreen";
+  static const createAdvertiseScreen = "/CreateAdvertiseScreen";
+
 }

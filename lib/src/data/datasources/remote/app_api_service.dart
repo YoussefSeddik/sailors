@@ -2,6 +2,9 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
+import 'package:sailors/src/data/models/advertise_model.dart';
+import 'package:sailors/src/data/models/category_model.dart';
+import 'package:sailors/src/data/models/package_model.dart';
 import '../../../core/utils/api_response.dart';
 import '../../../core/utils/constants.dart';
 import '../../models/auth_model.dart';
@@ -67,4 +70,26 @@ abstract class AppApiService {
   Future<HttpResponse<ApiResponse<void>>> sendSupport(
     @Body() SupportRequestParams params,
   );
+
+  @POST('/create-advertisement')
+  @MultiPart()
+  Future<HttpResponse<ApiResponse<AdvertiseModel>>> createAdvertisement(
+      @Part(name: "name") String name,
+      @Part(name: "details") String details,
+      @Part(name: "category_id") String categoryId,
+      @Part(name: "package_id") String packageId,
+      @Part(name: "advertisement_type_id") String advertisementTypeId,
+      @Part(name: "type") String type,
+      @Part(name: "status") String status,
+      @Part(name: "phone") String phone,
+      @Part(name: "whatsapp") String whatsapp,
+      @Part(name: "ad_price") String adPrice,
+      @Part(name: "coupon") String coupon,
+      @Part(name: "images[]") List<File> images);
+
+  @GET('/all-packages')
+  Future<HttpResponse<ApiResponse<List<PackageModel>>>> getAllPackages();
+
+  @GET('/all-categories')
+  Future<HttpResponse<ApiResponse<List<CategoryModel>>>> getAllCategories();
 }
