@@ -83,7 +83,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    AdvertiseInvoiceScreen(model: dummyAdvertise),
+    HomeScreen(),
     const AdsScreen(),
     SizedBox(),
     const NotificationScreen(),
