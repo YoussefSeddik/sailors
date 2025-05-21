@@ -59,6 +59,7 @@ flutter:
     - images/whatsapp_icon.svg
     - images/tiktok_icon.svg
     - images/facebook_icon.svg
+    - images/advertise_created_icon.png
     - i18n/en.json
     - i18n/ar.json
   fonts:

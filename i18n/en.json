@@ -74,5 +74,13 @@
   "upload_images": "Upload Images",
   "price": "Price",
   "next": "Next",
-  "required": "This field is required"
+  "required": "This field is required",
+  "download": "Download",
+  "advertise_invoice": "Advertisement Invoice",
+  "advertiser_name": "Advertiser Name",
+  "ad_duration": "Ad Duration",
+  "images": "Images",
+  "contact_number": "Contact Number",
+  "total": "Total",
+  "days": "days"
 }

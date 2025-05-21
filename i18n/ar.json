@@ -74,6 +74,13 @@
   "upload_images": "تحميل الصور",
   "price": "السعر",
   "next": "التالي",
-  "required": "هذا الحقل مطلوب"
-
+  "required": "هذا الحقل مطلوب",
+  "download": "تحميل",
+  "advertise_invoice": "فاتورة الاعلان",
+  "advertiser_name": "اسم صاحب الاعلان",
+  "ad_duration": "مده ظهور الاعلان",
+  "images": "الصور",
+  "contact_number": "رقم التواصل",
+  "total": "الاجمالي",
+  "days": "ايام"
 }

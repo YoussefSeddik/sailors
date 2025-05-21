@@ -8,14 +8,57 @@ import 'package:sailors/src/presentation/screens/profile_screen/profile_screen.d
 import '../../config/themes/app_theme.dart';
 import '../../core/bloc/base_state.dart';
 import '../../core/widgets/svg_nav_icon.dart';
+import '../../data/models/advertise_model.dart';
 import '../../injector.dart';
 import 'add_ad_screen.dart';
 import 'ads_screen.dart';
+import 'create_advertise_screen/advertise_invoice_screen.dart';
 import 'create_advertise_screen/create_advertise_bloc.dart';
 import 'create_advertise_screen/create_advertise_event.dart';
 import 'home_screen.dart';
 import 'notifications_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+final dummyAdvertise = AdvertiseModel(
+  id: 3,
+  userId: 2,
+  categoryId: "1",
+  packageId: "1",
+  advertisementTypeId: "1",
+  couponId: null,
+  price: "50.00",
+  couponDiscount: null,
+  coupon: null,
+  priceAfterCoupon: null,
+  paymentStatus: "unpaid",
+  name: "rewrewrewrew",
+  details: "rewrewrewrew",
+  adPrice: "50.00",
+  phone: "432432432432",
+  whatsapp: "432432432432",
+  type: "normal",
+  status: "new",
+  startAt: null,
+  expireAt: null,
+  images: [
+    AdvertisementImage(
+      id: 2,
+      image:
+      "https://sailor-kw.online/uploads/advertisements/1747752087_682c94979dd50.jpg",
+    ),
+    AdvertisementImage(
+      id: 3,
+      image:
+      "https://sailor-kw.online/uploads/advertisements/1747752087_682c94979dd50.jpg",
+    ),
+    AdvertisementImage(
+      id: 4,
+      image:
+      "https://sailor-kw.online/uploads/advertisements/1747752087_682c94979dd50.jpg",
+    ),
+  ],
+  createdAt: "2025-05-20 14:41:27",
+);
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.light;
@@ -40,7 +83,7 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
 
   final List<Widget> _screens = [
-    const HomeScreen(),
+    AdvertiseInvoiceScreen(model: dummyAdvertise),
     const AdsScreen(),
     SizedBox(),
     const NotificationScreen(),

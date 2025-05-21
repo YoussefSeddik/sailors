@@ -1,6 +1,7 @@
 import 'package:sailors/src/core/bloc/base_state.dart';
 import 'package:sailors/src/core/bloc/bloc_with_state.dart';
 import 'package:sailors/src/core/resources/data_state.dart';
+import 'package:sailors/src/data/models/advertise_model.dart';
 import 'package:sailors/src/domain/usecaes/app_usecase.dart';
 
 import '../../../data/models/category_model.dart';
@@ -42,8 +43,9 @@ class CreateAdvertiseBloc
     on<SubmitAdvertise>((event, emit) async {
       emit(LoadingState());
       final result = await _appUseCases.createAdvertisement(event.params);
-      if (result is DataSuccess) {
-        emit(SuccessState(CreateAdvertiseState(isSubmitted: true)));
+      if (result is DataSuccess<AdvertiseModel>) {
+        emit(SuccessState(CreateAdvertiseState(
+            advertiseModel: result.data, isSubmitted: true)));
       } else {
         emit(FailureState(result.message ?? 'Unknown error'));
       }
@@ -55,10 +57,12 @@ class CreateAdvertiseState extends BaseState {
   final List<PackageModel> packages;
   final List<CategoryModel> categories;
   final bool isSubmitted;
+  final AdvertiseModel? advertiseModel;
 
   CreateAdvertiseState({
     this.packages = const [],
     this.categories = const [],
     this.isSubmitted = false,
+    this.advertiseModel
   });
 }

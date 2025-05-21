@@ -11,6 +11,7 @@ import '../../../widgets/custom_drop_down.dart';
 import '../../../widgets/custom_toggle.dart';
 import '../../../widgets/generic_selectable_wrap.dart';
 import '../../../widgets/image_upload_ontainer.dart';
+import 'advertise_invoice_screen.dart';
 import 'create_advertise_bloc.dart';
 import 'create_advertise_event.dart';
 
@@ -98,10 +99,21 @@ class _CreateAdvertiseScreenState extends State<CreateAdvertiseScreen> {
           }
           if (state is SuccessState<CreateAdvertiseState>) {
             if (state.data?.isSubmitted ?? false) {
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(SnackBar(content: Text('success'.tr())));
-              Navigator.pop(context, true);
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('success'.tr())),
+              );
+
+              final advertiseModel = state.data?.advertiseModel;
+              if (advertiseModel != null) {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => AdvertiseInvoiceScreen(model: advertiseModel),
+                  ),
+                );
+              } else {
+                Navigator.pop(context, true);
+              }
             }
           }
         },
