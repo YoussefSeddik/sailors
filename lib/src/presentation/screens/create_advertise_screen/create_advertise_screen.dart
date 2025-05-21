@@ -10,6 +10,7 @@ import '../../../data/models/params/create_advertise_params.dart';
 import '../../../widgets/custom_drop_down.dart';
 import '../../../widgets/custom_toggle.dart';
 import '../../../widgets/generic_selectable_wrap.dart';
+import '../../../widgets/image_upload_ontainer.dart';
 import 'create_advertise_bloc.dart';
 import 'create_advertise_event.dart';
 
@@ -50,7 +51,12 @@ class _CreateAdvertiseScreenState extends State<CreateAdvertiseScreen> {
     final picker = ImagePicker();
     final picked = await picker.pickMultiImage();
     if (picked.isNotEmpty) {
-      setState(() => _images.addAll(picked.map((x) => File(x.path))));
+      setState(
+        () =>
+            _images
+              ..clear()
+              ..addAll(picked.map((x) => File(x.path))),
+      );
     }
   }
 
@@ -84,7 +90,7 @@ class _CreateAdvertiseScreenState extends State<CreateAdvertiseScreen> {
     return Scaffold(
       appBar: SailorsAppBar(title: "create_ad".tr(), showBackButton: false),
       body: BlocConsumer<CreateAdvertiseBloc, BaseState<CreateAdvertiseState>>(
-        listener: (context, state){
+        listener: (context, state) {
           if (state is FailureState<CreateAdvertiseState>) {
             ScaffoldMessenger.of(
               context,
@@ -92,8 +98,9 @@ class _CreateAdvertiseScreenState extends State<CreateAdvertiseScreen> {
           }
           if (state is SuccessState<CreateAdvertiseState>) {
             if (state.data?.isSubmitted ?? false) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('success'.tr())));
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(SnackBar(content: Text('success'.tr())));
               Navigator.pop(context, true);
             }
           }
@@ -143,7 +150,8 @@ class _CreateAdvertiseScreenState extends State<CreateAdvertiseScreen> {
                         _selectedPackageIndex = index;
                         _selectedPackageId = pkg.id.toString();
                         _selectedPrice = pkg.price;
-                        _selectedAdvertisementTypeId = pkg.advertisementType.id.toString();
+                        _selectedAdvertisementTypeId =
+                            pkg.advertisementType.id.toString();
                       });
                     },
                   ),
@@ -155,7 +163,8 @@ class _CreateAdvertiseScreenState extends State<CreateAdvertiseScreen> {
                     selectedValue: _selectedCategoryId,
                     getLabel: (cat) => cat.name,
                     getValue: (cat) => cat.id.toString(),
-                    onChanged: (val) => setState(() => _selectedCategoryId = val),
+                    onChanged:
+                        (val) => setState(() => _selectedCategoryId = val),
                     labelText: 'category'.tr(),
                   ),
                   const SizedBox(height: 16),
@@ -184,19 +193,10 @@ class _CreateAdvertiseScreenState extends State<CreateAdvertiseScreen> {
                   const SizedBox(height: 16),
                   Text('${'upload_images'.tr()}*'),
                   const SizedBox(height: 8),
-                  GestureDetector(
-                    onTap: _pickImages,
-                    child: Container(
-                      height: 120,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: const Center(child: Icon(Icons.cloud_upload)),
-                    ),
+                  ImageUploadContainer(
+                    images: _images,
+                    onUploadTap: _pickImages,
                   ),
-
                   const SizedBox(height: 16),
                   Text('${'price'.tr()}*'),
                   const SizedBox(height: 8),
