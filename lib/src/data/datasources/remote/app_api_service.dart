@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:sailors/src/data/models/advertise_model.dart';
 import 'package:sailors/src/data/models/category_model.dart';
+import 'package:sailors/src/data/models/notification_model.dart';
 import 'package:sailors/src/data/models/package_model.dart';
 import '../../../core/utils/api_response.dart';
 import '../../../core/utils/constants.dart';
@@ -92,4 +93,14 @@ abstract class AppApiService {
 
   @GET('/all-categories')
   Future<HttpResponse<ApiResponse<List<CategoryModel>>>> getAllCategories();
+
+  @GET('/notifications')
+  Future<HttpResponse<ApiResponse<List<NotificationModel>>>> getNotifications();
+
+  @GET('/current-advertisements')
+  Future<HttpResponse<ApiResponse<List<AdvertiseModel>>>> getCurrentAds();
+
+  @GET('/expired-advertisements')
+  Future<HttpResponse<ApiResponse<List<AdvertiseModel>>>> getPrevAds();
+
 }

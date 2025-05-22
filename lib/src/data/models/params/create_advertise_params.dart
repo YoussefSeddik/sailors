@@ -46,12 +46,12 @@ class CreateAdvertiseParams {
   }
 }
 
-enum AdvertiseStatus { new_, old }
+enum AdvertiseStatus { new_, used }
 
 enum AdvertiseType { normal, premium }
 
 extension AdvertisementStatusExt on AdvertiseStatus {
-  String get value => this == AdvertiseStatus.new_ ? 'new' : 'old';
+  String get value => this == AdvertiseStatus.new_ ? 'new' : 'used';
 }
 
 extension AdvertisementTypeExt on AdvertiseType {

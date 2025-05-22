@@ -7,8 +7,16 @@ import 'package:sailors/src/core/widgets/safe_network_image.dart';
 
 import '../../data/models/ad_model.dart';
 
+import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:sailors/src/config/localization/app_language.dart';
+import 'package:sailors/src/config/themes/app_colors.dart';
+import 'package:sailors/src/config/themes/fonts/app_text_styles.dart';
+import 'package:sailors/src/core/widgets/safe_network_image.dart';
+import 'package:sailors/src/data/models/advertise_model.dart';
+
 class AdCard extends StatelessWidget {
-  final AdModel? ad;
+  final AdvertiseModel? ad;
 
   const AdCard({super.key, required this.ad});
 
@@ -26,7 +34,7 @@ class AdCard extends StatelessWidget {
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: safeNetworkImage(
-                ad?.imageUrl ?? "",
+                ad?.images?.firstOrNull?.image ?? "",
                 width: 120,
                 height: 90,
               ),
@@ -36,7 +44,12 @@ class AdCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Text(ad?.title ?? "", textAlign: TextAlign.right),
+                  Text(
+                    ad?.name ?? "",
+                    textAlign: TextAlign.right,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                   const SizedBox(height: 4),
                   if (!isExpired) ...[
                     RichText(
@@ -47,15 +60,13 @@ class AdCard extends StatelessWidget {
                           color: theme.colorScheme.onSurface,
                         ),
                         children: [
+                          TextSpan(text: '${'ad_expires_in'.tr()} '),
                           TextSpan(
-                            text: '${'ad_expires_in'.tr()} ',
-                            style: TextStyle(
-                              color: theme.colorScheme.onSurface,
+                            text:
+                                '${ad?.daysUntilExpiration ?? 0} ${'days'.tr()}',
+                            style: const TextStyle(
+                              color: AppColors.color_00A9C8,
                             ),
-                          ),
-                          TextSpan(
-                            text: '٥ أيام',
-                            style: TextStyle(color: AppColors.color_00A9C8),
                           ),
                         ],
                       ),
@@ -101,7 +112,9 @@ class AdCard extends StatelessWidget {
                             ),
                             child: Text(
                               'delete'.tr(),
-                              style: TextStyle(color: AppColors.color_FFFFFF),
+                              style: const TextStyle(
+                                color: AppColors.color_FFFFFF,
+                              ),
                             ),
                           ),
                         ),

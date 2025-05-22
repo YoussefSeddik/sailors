@@ -1,13 +1,18 @@
+import 'package:sailors/src/data/models/package_model.dart';
+import 'package:sailors/src/data/models/user_model.dart';
+
+import 'advertise_type_model.dart';
+import 'category_model.dart';
+
 class AdvertiseModel {
   final int? id;
-  final int? userId;
-  final String? categoryId;
-  final String? packageId;
-  final String? advertisementTypeId;
-  final int? couponId;
+  final UserModel? user;
+  final CategoryModel? category;
+  final PackageModel? package;
+  final AdvertiseTypeModel? advertisementType;
+  final String? coupon;
   final String? price;
   final String? couponDiscount;
-  final String? coupon;
   final num? priceAfterCoupon;
   final String? paymentStatus;
   final String? name;
@@ -21,17 +26,17 @@ class AdvertiseModel {
   final String? expireAt;
   final List<AdvertisementImage>? images;
   final String? createdAt;
+  final String? expiredAt;
 
   AdvertiseModel({
     required this.id,
-    required this.userId,
-    required this.categoryId,
-    required this.packageId,
-    required this.advertisementTypeId,
-    required this.couponId,
+    required this.user,
+    required this.category,
+    required this.package,
+    required this.advertisementType,
+    required this.coupon,
     required this.price,
     required this.couponDiscount,
-    required this.coupon,
     required this.priceAfterCoupon,
     required this.paymentStatus,
     required this.name,
@@ -45,19 +50,21 @@ class AdvertiseModel {
     required this.expireAt,
     required this.images,
     required this.createdAt,
+    required this.expiredAt,
   });
 
   factory AdvertiseModel.fromJson(Map<String, dynamic> json) {
     return AdvertiseModel(
       id: json['id'],
-      userId: json['user_id'],
-      categoryId: json['category_id'],
-      packageId: json['package_id'],
-      advertisementTypeId: json['advertisement_type_id'],
-      couponId: json['coupon_id'],
+      user: json['user'] != null ? UserModel.fromJson(json['user']) : null,
+      category: json['category'] != null ? CategoryModel.fromJson(json['category']) : null,
+      package: json['package'] != null ? PackageModel.fromJson(json['package']) : null,
+      advertisementType: json['advertisement_type'] != null
+          ? AdvertiseTypeModel.fromJson(json['advertisement_type'])
+          : null,
+      coupon: json['coupon'],
       price: json['price'],
       couponDiscount: json['coupon_discount'],
-      coupon: json['coupon'],
       priceAfterCoupon: json['price_after_coupon'],
       paymentStatus: json['payment_status'],
       name: json['name'],
@@ -70,25 +77,24 @@ class AdvertiseModel {
       startAt: json['start_at'],
       expireAt: json['expire_at'],
       images: json['images'] != null
-          ? (json['images'] as List)
-          .map((img) => AdvertisementImage.fromJson(img))
-          .toList()
-          : [],
+            ? (json['images'] as List?)
+            ?.map((img) => AdvertisementImage.fromJson(img))
+            .toList(): [],
       createdAt: json['created_at'],
+      expiredAt: json['expired_at']
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'user_id': userId,
-      'category_id': categoryId,
-      'package_id': packageId,
-      'advertisement_type_id': advertisementTypeId,
-      'coupon_id': couponId,
+      'user': user?.toJson(),
+      'category': category?.toJson(),
+      'package': package?.toJson(),
+      'advertisement_type': advertisementType?.toJson(),
+      'coupon': coupon,
       'price': price,
       'coupon_discount': couponDiscount,
-      'coupon': coupon,
       'price_after_coupon': priceAfterCoupon,
       'payment_status': paymentStatus,
       'name': name,
@@ -102,9 +108,11 @@ class AdvertiseModel {
       'expire_at': expireAt,
       'images': images?.map((e) => e.toJson()).toList(),
       'created_at': createdAt,
+      'expired_at': expireAt
     };
   }
 }
+
 
 class AdvertisementImage {
   final int? id;
@@ -118,5 +126,28 @@ class AdvertisementImage {
 
   Map<String, dynamic> toJson() {
     return {'id': id, 'image': image};
+  }
+}
+extension AdvertiseModelExtensions on AdvertiseModel {
+  bool get isExpired {
+    if (expiredAt == null) return false;
+    try {
+      final expiry = DateTime.parse(expiredAt!);
+      return expiry.isBefore(DateTime.now());
+    } catch (_) {
+      return false;
+    }
+  }
+
+  int get daysUntilExpiration {
+    if (expireAt == null) return 0;
+    try {
+      final expiry = DateTime.parse(expireAt!);
+      final now = DateTime.now();
+      final diff = expiry.difference(now).inDays;
+      return diff >= 0 ? diff : 0;
+    } catch (_) {
+      return 0;
+    }
   }
 }

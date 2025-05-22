@@ -7,13 +7,12 @@ import 'package:sailors/src/presentation/screens/settings/settings_screen.dart';
 
 import '../../presentation/models/otp_result_model.dart';
 import '../../presentation/screens/add_ad_screen.dart';
-import '../../presentation/screens/ads_screen.dart';
 import '../../presentation/screens/create_advertise_screen/create_advertise_screen.dart';
 import '../../presentation/screens/forget_password/forget_password_screen.dart';
 import '../../presentation/screens/home_screen.dart';
 import '../../presentation/screens/login/login_screen.dart';
 import '../../presentation/screens/main_screen.dart';
-import '../../presentation/screens/notifications_screen.dart';
+import '../../presentation/screens/notifications/notifications_screen.dart';
 import '../../presentation/screens/profile_screen/profile_screen.dart';
 import '../../presentation/screens/register/register_screen.dart';
 import '../../presentation/screens/successful_state_screen.dart';
@@ -33,14 +32,11 @@ mixin AppRoutes {
       case RoutesConstants.homeScreen:
         return _materialRoute(const HomeScreen());
 
-      case RoutesConstants.adsScreen:
-        return _materialRoute(const AdsScreen());
-
       case RoutesConstants.addAdScreen:
         return _materialRoute(const AddAdScreen());
 
       case RoutesConstants.notificationsScreen:
-        return _materialRoute(const NotificationScreen());
+        return _materialRoute(const NotificationsScreen());
 
       case RoutesConstants.profileScreen:
         return _materialRoute(const ProfileScreen());
@@ -83,6 +79,9 @@ mixin AppRoutes {
       case RoutesConstants.createAdvertiseScreen:
         return _materialRoute(CreateAdvertiseScreen());
 
+      case RoutesConstants.myAdsScreen:
+        return _materialRoute(CreateAdvertiseScreen());
+
       default:
         return _materialRoute(
           const Scaffold(body: Center(child: Text("Route not found"))),
@@ -104,7 +103,6 @@ class RoutesConstants {
   static const screenChooseLoginRegister = "/ScreenChooseLoginRegister";
   static const mainScreen = "/MainScreen";
   static const homeScreen = "/HomeScreen";
-  static const adsScreen = "/AdsScreen";
   static const addAdScreen = "/AddAdScreen";
   static const notificationsScreen = "/NotificationsScreen";
   static const profileScreen = "/ProfileScreen";
@@ -120,5 +118,6 @@ class RoutesConstants {
   static const supportRequestScreen = "/SupportRequestScreen";
   static const aboutAppScreen = "/AboutAppScreen";
   static const createAdvertiseScreen = "/CreateAdvertiseScreen";
+  static const myAdsScreen = "/MyAdsScreen";
 
 }

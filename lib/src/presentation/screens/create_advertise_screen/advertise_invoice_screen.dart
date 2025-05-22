@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import '../../../core/widgets/sailors_app_bar.dart';
 import '../../../data/models/advertise_model.dart';
-import '../../../config/themes/app_colors.dart';
 
 class AdvertiseInvoiceScreen extends StatelessWidget {
   final AdvertiseModel model;
@@ -28,11 +27,11 @@ class AdvertiseInvoiceScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 16),
-            _infoRow(context, 'advertiser_name'.tr(), model.name),
-            _infoRow(context, 'phone_number'.tr(), model.phone),
+            _infoRow(context, 'advertiser_name'.tr(), model.user?.name),
+            _infoRow(context, 'phone_number'.tr(), model.user?.phone),
             _infoRow(context, 'ad_type'.tr(), _mapType(model.type)),
-            _infoRow(context, 'ad_duration'.tr(), '7 ${'days'.tr()}'),
-            _infoRow(context, 'category'.tr(), model.categoryId),
+            _infoRow(context, 'ad_duration'.tr(), model.package?.advertisementType?.name ?? '-',),
+            _infoRow(context, 'category'.tr(), model.category?.name),
             _infoRow(context, 'status'.tr(), _mapStatus(model.status)),
             _infoRow(context, 'description'.tr(), model.details),
             _imagesRow(context, model.images ?? []),
@@ -99,10 +98,7 @@ class AdvertiseInvoiceScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Expanded(
-            child: Text(
-              'images'.tr(),
-              style: TextStyle(color: labelColor ?? AppColors.color_CCCCCC),
-            ),
+            child: Text('images'.tr(), style: TextStyle(color: labelColor)),
           ),
           const SizedBox(width: 12),
           Flexible(
@@ -149,15 +145,9 @@ class AdvertiseInvoiceScreen extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            'total'.tr(),
-            style: TextStyle(color: labelColor ?? AppColors.color_CCCCCC),
-          ),
+          Text('total'.tr(), style: TextStyle(color: labelColor)),
           const Spacer(),
-          Text(
-            'د.ك $price',
-            style: TextStyle(color: textColor ?? AppColors.color_51AACC),
-          ),
+          Text('د.ك $price', style: TextStyle(color: textColor)),
         ],
       ),
     );

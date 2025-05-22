@@ -3,6 +3,7 @@ import 'package:sailors/src/core/resources/data_state.dart';
 import 'package:sailors/src/data/models/ad_model.dart';
 import 'package:sailors/src/data/models/auth_model.dart';
 import 'package:sailors/src/data/models/category_model.dart';
+import 'package:sailors/src/data/models/notification_model.dart';
 import 'package:sailors/src/data/models/package_model.dart';
 import 'package:sailors/src/domain/repositories/app_repository.dart';
 
@@ -59,11 +60,11 @@ class AppUseCases {
     return _repo.updatePassword(params);
   }
 
-  Future<DataState<List<AdModel>>> getCurrentAds() {
+  Future<DataState<List<AdvertiseModel>>> getCurrentAds() {
     return _repo.getCurrentAds();
   }
 
-  Future<DataState<List<AdModel>>> getPreviousAds() {
+  Future<DataState<List<AdvertiseModel>>> getPreviousAds() {
     return _repo.getPreviousAds();
   }
 
@@ -113,5 +114,9 @@ class AppUseCases {
 
   Future<DataState<List<CategoryModel>>> getAllCategories() {
     return _repo.getAllCategories();
+  }
+
+  Future<DataState<List<NotificationModel>>> getNotifications() {
+    return _repo.getNotifications();
   }
 }

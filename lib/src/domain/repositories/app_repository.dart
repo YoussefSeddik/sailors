@@ -1,5 +1,6 @@
 import 'package:sailors/src/data/models/advertise_model.dart';
 import 'package:sailors/src/data/models/category_model.dart';
+import 'package:sailors/src/data/models/notification_model.dart';
 import 'package:sailors/src/data/models/package_model.dart';
 import 'package:sailors/src/data/models/params/create_advertise_params.dart';
 import 'package:sailors/src/data/models/params/register_params.dart';
@@ -29,9 +30,9 @@ abstract class AppRepository {
     UpdatePasswordParams updatePasswordParams,
   );
 
-  Future<DataState<List<AdModel>>> getCurrentAds();
+  Future<DataState<List<AdvertiseModel>>> getCurrentAds();
 
-  Future<DataState<List<AdModel>>> getPreviousAds();
+  Future<DataState<List<AdvertiseModel>>> getPreviousAds();
 
   Future<DataState<UserModel>> updateProfile(
     UpdateProfileParams updateProfileParams,
@@ -46,5 +47,7 @@ abstract class AppRepository {
   Future<DataState<List<PackageModel>>> getAllPackages();
 
   Future<DataState<List<CategoryModel>>> getAllCategories();
+
+  Future<DataState<List<NotificationModel>>> getNotifications();
 
 }

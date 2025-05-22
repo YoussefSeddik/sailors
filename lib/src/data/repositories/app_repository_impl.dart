@@ -11,6 +11,7 @@ import '../../domain/repositories/app_repository.dart';
 import '../datasources/remote/app_api_service.dart';
 import '../models/ad_model.dart';
 import '../models/auth_model.dart';
+import '../models/notification_model.dart';
 import '../models/params/send_otp_params.dart';
 import '../models/user_model.dart';
 
@@ -47,114 +48,13 @@ class AppRepositoryImpl implements AppRepository {
   }
 
   @override
-  Future<DataState<List<AdModel>>> getCurrentAds() async {
-    await Future.delayed(
-      const Duration(milliseconds: requestMockDelayInMillis),
-    );
-
-    return DataSuccess([
-      AdModel(
-        id: "1",
-        title: 'سفينة للبيع',
-        imageUrl: 'https://dummyimage.com/120x90/00A9C8/ffffff&text=Ad1',
-        statusText: 'نشط',
-        isExpired: false,
-      ),
-      AdModel(
-        id: "2",
-        title: 'لنش صيد للإيجار',
-        imageUrl: 'https://dummyimage.com/120x90/006D77/ffffff&text=Ad2',
-        statusText: 'متاح حتى نهاية الشهر',
-        isExpired: false,
-      ),
-    ]);
+  Future<DataState<List<AdvertiseModel>>> getCurrentAds() async {
+    return handleResponse(_api.getCurrentAds());
   }
 
   @override
-  Future<DataState<List<AdModel>>> getPreviousAds() async {
-    await Future.delayed(
-      const Duration(milliseconds: requestMockDelayInMillis),
-    );
-
-    return DataSuccess([
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-      AdModel(
-        id: "3",
-        title: 'مركب قديم تم بيعه',
-        imageUrl: 'https://dummyimage.com/120x90/CCCCCC/ffffff&text=Ad3',
-        statusText: 'انتهى العرض',
-        isExpired: true,
-      ),
-    ]);
+  Future<DataState<List<AdvertiseModel>>> getPreviousAds() async {
+    return handleResponse(_api.getPrevAds());
   }
 
   @override
@@ -204,6 +104,26 @@ class AppRepositoryImpl implements AppRepository {
   @override
   Future<DataState<List<CategoryModel>>> getAllCategories() {
     return handleResponse(_api.getAllCategories());
+  }
+
+  @override
+  Future<DataState<List<NotificationModel>>> getNotifications() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    final fakeData = [
+      NotificationModel(
+        title: 'Welcome!',
+        desc: 'Thanks for joining our platform.',
+        image: 'https://via.placeholder.com/150',
+      ),
+      NotificationModel(
+        title: 'New Feature',
+        desc: 'Check out the latest updates now.',
+        image: 'https://via.placeholder.com/150',
+      ),
+    ];
+
+    return DataSuccess(fakeData);
   }
 
 }

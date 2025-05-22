@@ -7,6 +7,7 @@ import 'package:sailors/src/presentation/screens/contact_us_and_support/support_
 import 'package:sailors/src/presentation/screens/create_advertise_screen/create_advertise_bloc.dart';
 import 'package:sailors/src/presentation/screens/forget_password/forget_password_bloc.dart';
 import 'package:sailors/src/presentation/screens/login/login_bloc.dart';
+import 'package:sailors/src/presentation/screens/notifications/notification_bloc.dart';
 import 'package:sailors/src/presentation/screens/otp/otp_bloc.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_ads_bloc.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_bloc.dart';
@@ -84,4 +85,6 @@ Future<void> initializeDependencies() async {
   injector.registerFactory<UpdateProfileScreenBloc>(() => UpdateProfileScreenBloc(injector(), injector()));
   injector.registerFactory<SupportBloc>(() => SupportBloc(injector()));
   injector.registerFactory<CreateAdvertiseBloc>(() => CreateAdvertiseBloc(injector()));
+  injector.registerFactory<NotificationBloc>(() => NotificationBloc(injector()));
+
 }

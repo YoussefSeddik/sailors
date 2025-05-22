@@ -2,63 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:sailors/src/config/routes/app_routes.dart';
 import 'package:sailors/src/presentation/screens/create_advertise_screen/create_advertise_screen.dart';
+import 'package:sailors/src/presentation/screens/profile_screen/profile_ads_bloc.dart';
+import 'package:sailors/src/presentation/screens/profile_screen/profile_bloc.dart';
+import 'package:sailors/src/presentation/screens/profile_screen/profile_event.dart';
 import 'package:sailors/src/presentation/screens/profile_screen/profile_screen.dart';
 import '../../config/themes/app_theme.dart';
-import '../../core/bloc/base_state.dart';
 import '../../core/widgets/svg_nav_icon.dart';
-import '../../data/models/advertise_model.dart';
 import '../../injector.dart';
-import 'add_ad_screen.dart';
-import 'ads_screen.dart';
-import 'create_advertise_screen/advertise_invoice_screen.dart';
 import 'create_advertise_screen/create_advertise_bloc.dart';
 import 'create_advertise_screen/create_advertise_event.dart';
 import 'home_screen.dart';
-import 'notifications_screen.dart';
+import 'my_ads/my_ads_screen.dart';
+import 'notifications/notifications_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-final dummyAdvertise = AdvertiseModel(
-  id: 3,
-  userId: 2,
-  categoryId: "1",
-  packageId: "1",
-  advertisementTypeId: "1",
-  couponId: null,
-  price: "50.00",
-  couponDiscount: null,
-  coupon: null,
-  priceAfterCoupon: null,
-  paymentStatus: "unpaid",
-  name: "rewrewrewrew",
-  details: "rewrewrewrew",
-  adPrice: "50.00",
-  phone: "432432432432",
-  whatsapp: "432432432432",
-  type: "normal",
-  status: "new",
-  startAt: null,
-  expireAt: null,
-  images: [
-    AdvertisementImage(
-      id: 2,
-      image:
-      "https://sailor-kw.online/uploads/advertisements/1747752087_682c94979dd50.jpg",
-    ),
-    AdvertisementImage(
-      id: 3,
-      image:
-      "https://sailor-kw.online/uploads/advertisements/1747752087_682c94979dd50.jpg",
-    ),
-    AdvertisementImage(
-      id: 4,
-      image:
-      "https://sailor-kw.online/uploads/advertisements/1747752087_682c94979dd50.jpg",
-    ),
-  ],
-  createdAt: "2025-05-20 14:41:27",
-);
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.light;
@@ -84,10 +41,19 @@ class _MainScreenState extends State<MainScreen> {
 
   final List<Widget> _screens = [
     HomeScreen(),
-    const AdsScreen(),
+    BlocProvider(
+      create: (_) => injector<ProfileAdsBloc>(),
+      child: MyAdsScreen(),
+    ),
     SizedBox(),
-    const NotificationScreen(),
-    const ProfileScreen(),
+    const NotificationsScreen(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => injector<ProfileBloc>()..add(LoadProfile())),
+        BlocProvider(create: (_) => injector<ProfileAdsBloc>()),
+      ],
+      child: ProfileScreen(),
+    ),
   ];
 
   void _onItemTapped(int index) {
@@ -173,10 +139,14 @@ class _MainScreenState extends State<MainScreen> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (_) => BlocProvider(
-                            create: (_) => injector<CreateAdvertiseBloc>()..add(FetchScreenData()),
-                            child: const CreateAdvertiseScreen(),
-                          ),
+                          builder:
+                              (_) => BlocProvider(
+                                create:
+                                    (_) =>
+                                        injector<CreateAdvertiseBloc>()
+                                          ..add(FetchScreenData()),
+                                child: const CreateAdvertiseScreen(),
+                              ),
                         ),
                       );
                     },
